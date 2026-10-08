@@ -1,0 +1,19 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1.0",
+	"FriendlyName": "Crowd Events",
+	"Description": "Eventi semantici come campi attrattivi e repulsivi per Dynamic Crowd Routing: formule del campo e della reward esposte ai Blueprint.",
+	"Category": "Simulation",
+	"CreatedBy": "Nicolò Fadiga",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "CrowdEvents",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
