@@ -1,9 +1,9 @@
 {
 	"FileVersion": 3,
-	"Version": 1,
-	"VersionName": "0.1.0",
+	"Version": 2,
+	"VersionName": "0.2.0",
 	"FriendlyName": "Crowd Events",
-	"Description": "Eventi semantici come campi attrattivi e repulsivi per Dynamic Crowd Routing: formule del campo e della reward esposte ai Blueprint.",
+	"Description": "Eventi semantici come campi attrattivi e repulsivi per Dynamic Crowd Routing: formule esposte ai Blueprint, eventi piazzabili nel livello e pannello di controllo nell'editor.",
 	"Category": "Simulation",
 	"CreatedBy": "Nicolò Fadiga",
 	"CanContainContent": false,
@@ -13,6 +13,11 @@
 		{
 			"Name": "CrowdEvents",
 			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "CrowdEventsEditor",
+			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
 	]
