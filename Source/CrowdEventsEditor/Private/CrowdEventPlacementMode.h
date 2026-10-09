@@ -5,6 +5,7 @@
 #include "EdMode.h"
 
 class ACrowdEvent;
+struct FViewportCursorLocation;
 
 /**
  * Modalità di piazzamento: scelto un preset nel pannello, il clic successivo nel viewport
@@ -28,8 +29,8 @@ public:
 	virtual bool IsCompatibleWith(FEditorModeID OtherModeID) const override { return true; }
 
 private:
-	/** Cerca il pavimento lungo il raggio; falso se il punto non è valido. */
-	static bool FindFloor(UWorld* World, const FVector& Origin, const FVector& Direction, FVector& OutLocation);
+	/** Cerca il pavimento lungo il raggio del cursore; falso se il punto non è valido. */
+	static bool FindFloor(UWorld* World, const FViewportCursorLocation& Cursor, FVector& OutLocation);
 
 	FCrowdEventPresetData PendingPreset;
 	TFunction<void(ACrowdEvent*)> PlacedCallback;

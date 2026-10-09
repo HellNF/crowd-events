@@ -65,11 +65,23 @@ bool FCrowdEventPlacementMode::IsPlacing()
 	return GLevelEditorModeTools().IsModeActive(ModeId);
 }
 
-bool FCrowdEventPlacementMode::FindFloor(UWorld* World, const FVector& Origin, const FVector& Direction, FVector& OutLocation)
+bool FCrowdEventPlacementMode::FindFloor(UWorld* World, const FViewportCursorLocation& Cursor, FVector& OutLocation)
 {
 	if (!World)
 	{
 		return false;
+	}
+
+	FVector Start = Cursor.GetOrigin();
+	FVector End = Start + Cursor.GetDirection() * 1000000.0;
+	// Nelle viste ortografiche (Top, Front, ...) l'origine del cursore non è la camera e può
+	// trovarsi sotto il pavimento: il raggio attraversa tutto il mondo, come nel piazzamento
+	// dell'engine (FActorPositioning::TraceWorldForPosition).
+	const FEditorViewportClient* ViewportClient = Cursor.GetViewportClient();
+	if (ViewportClient && ViewportClient->IsOrtho())
+	{
+		Start -= Cursor.GetDirection() * (HALF_WORLD_MAX / 2);
+		End = Start + Cursor.GetDirection() * HALF_WORLD_MAX;
 	}
 
 	// Gli altri eventi e i pedoni non contano: si cerca la geometria del livello.
@@ -83,7 +95,7 @@ bool FCrowdEventPlacementMode::FindFloor(UWorld* World, const FVector& Origin, c
 	}
 
 	FHitResult Hit;
-	if (!World->LineTraceSingleByChannel(Hit, Origin, Origin + Direction * 1000000.0, ECC_Visibility, Query))
+	if (!World->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, Query))
 	{
 		return false;
 	}
@@ -106,7 +118,7 @@ bool FCrowdEventPlacementMode::HandleClick(FEditorViewportClient* InViewportClie
 
 	UWorld* World = InViewportClient ? InViewportClient->GetWorld() : nullptr;
 	FVector Location;
-	if (!FindFloor(World, Click.GetOrigin(), Click.GetDirection(), Location))
+	if (!FindFloor(World, Click, Location))
 	{
 		Notify(LOCTEXT("InvalidPoint", "Not a valid spot: click on the floor."));
 		return true;
@@ -157,7 +169,7 @@ bool FCrowdEventPlacementMode::MouseMove(FEditorViewportClient* ViewportClient, 
 		FSceneViewFamilyContext ViewFamily(FSceneViewFamily::ConstructionValues(Viewport, ViewportClient->GetScene(), ViewportClient->EngineShowFlags));
 		FSceneView* View = ViewportClient->CalcSceneView(&ViewFamily);
 		const FViewportCursorLocation Cursor(View, ViewportClient, X, Y);
-		bHoverValid = FindFloor(ViewportClient->GetWorld(), Cursor.GetOrigin(), Cursor.GetDirection(), HoverLocation);
+		bHoverValid = FindFloor(ViewportClient->GetWorld(), Cursor, HoverLocation);
 		ViewportClient->Invalidate();
 	}
 	return false;
