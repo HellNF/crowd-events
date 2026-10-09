@@ -5,8 +5,8 @@ come campi attrattivi e repulsivi. Espone le formule ai Blueprint come nodi dell
 «Crowd Events», mette gli eventi nel livello come attori e aggiunge all'editor il pannello
 «Crowd Events». Le distanze sono in metri.
 
-Stato: versione 0.2.0, prima versione di eventi e pannello. **Non ancora compilata**: è stata
-scritta senza Unreal a disposizione e va compilata e provata sul remoto (lista in fondo).
+Stato: versione 0.2.0, prima versione di eventi e pannello. Compilata e provata con Unreal
+5.4.4 il 9 ottobre 2026 (esiti in fondo); resta da controllare l'aspetto del pannello.
 Gli eventi per ora non influenzano i pedoni: mancano il gestore degli stati e i collegamenti
 nei Blueprint di DCR.
 
@@ -61,19 +61,20 @@ il file `CrowdEvents.uplugin` deve trovarsi in `Plugins/CrowdEvents/CrowdEvents.
 
 ## Prove della 0.2.0 sul remoto
 
-1. Compilare con `Build.bat` come per la 0.1.0. Ora i moduli sono due.
-2. Aprire il progetto: nel log deve comparire `CrowdEvents caricato` e in **Window** la voce
-   **Crowd Events**.
-3. A simulazione ferma: scegliere *Street performer*, *Place in level*, cliccare sul pavimento
-   di `Classic/Map_Level_Lane`. Devono comparire un disco a terra e due cerchi: l'anello a
-   1,5 m e il raggio di percezione a 10 m. Con *Brawl* l'anello è a circa 4 m.
-4. Cliccare su un muro: l'evento non viene piazzato e compare un avviso.
-5. Premere *Start*: parte Simulate. Piazzare un evento a simulazione in corso e cambiarne i
-   parametri: l'anello disegnato deve seguire il valore di *Danger*.
-6. *End event* toglie cerchi e disco; *Remove* toglie l'evento dall'elenco; *Stop* ferma la
-   simulazione.
-7. Mandare una schermata del pannello: l'aspetto è stato scritto senza vederlo.
+Eseguite il 9 ottobre 2026 nel progetto di DCR, su `Classic/Map_Level_Lane`.
 
-Punti in cui è più probabile un errore di compilazione o di comportamento: la modalità di
-piazzamento (`FEdMode` registrata con `FEditorModeRegistry`), `SSegmentedControl` e l'avvio di
-Simulate con `RequestPlaySession`.
+| Prova | Esito |
+|---|---|
+| 1. Compilare con `Build.bat` come per la 0.1.0 (ora i moduli sono due) | passata: nessun errore né avviso |
+| 2. Aprire il progetto: nel log `CrowdEvents caricato`, in **Window** la voce **Crowd Events** | passata |
+| 3. A simulazione ferma: *Street performer*, *Place in level*, clic sul pavimento. Compaiono un disco a terra e due cerchi: l'anello a 1,5 m e il raggio di percezione a 10 m. Con *Brawl* l'anello è a circa 4 m | passata dopo una correzione: nelle viste ortografiche (Top) il clic non trovava il pavimento |
+| 4. Clic su un muro: l'evento non viene piazzato e compare un avviso | passata per le facce verticali; la cima di un muro è orizzontale e viene accettata |
+| 5. *Start* avvia Simulate. Piazzando un evento a simulazione in corso e cambiandone i parametri, l'anello disegnato segue il valore di *Danger* | passata |
+| 6. *End event* toglie cerchi e disco; *Remove* toglie l'evento dall'elenco; *Stop* ferma la simulazione | passata |
+| 7. Schermata del pannello: l'aspetto è stato scritto senza vederlo | da fare |
+
+La modalità di piazzamento (`FEdMode` registrata con `FEditorModeRegistry`), `SSegmentedControl`
+e l'avvio di Simulate con `RequestPlaySession` funzionano nella 5.4.4 senza modifiche.
+
+Non ancora provati: i preset come Data Asset, la modalità avanzata e la casella dei cerchi di
+debug.
