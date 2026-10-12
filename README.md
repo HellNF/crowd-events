@@ -5,7 +5,7 @@ come campi attrattivi e repulsivi. Espone le formule ai Blueprint come nodi dell
 «Crowd Events», mette gli eventi nel livello come attori e aggiunge all'editor il pannello
 «Crowd Events». Le distanze sono in metri.
 
-Stato: versione 0.3.0, compilata e provata con Unreal 5.4.4 il 12 ottobre 2026 (esiti in fondo).
+Stato: versione 0.3.1, compilata e provata con Unreal 5.4.4 il 12 ottobre 2026 (esiti in fondo).
 Aggiunge alla 0.2.0 le formule della reward, il componente di reazione del pedone e il gestore
 degli stati. Gli eventi influenzano i pedoni solo dopo aver aggiunto il
 componente a `BP_Pawn` e i nodi di chiamata nei Blueprint di DCR (sezione «Collegamenti»).
@@ -175,10 +175,35 @@ Notato durante le prove:
 
 ## Versione 0.3.1
 
-Scritta il 12 ottobre 2026 dopo le prove della 0.3.0, non ancora compilata.
+Scritta il 12 ottobre 2026 dopo le prove della 0.3.0.
 
 - Gli stati si disegnano con un cerchio di 25 cm sopra il pedone, non più con un punto: si
   vedono anche nella vista Top.
 - Chi deve sostare e si allontana oltre il raggio di percezione senza essersi fermato torna
   allo stato 0, invece di restare nello stato 2 fino a 30 s.
 - Tolto dal repository il file `.pyc` committato per errore.
+
+### Prove della 0.3.1 sul remoto
+
+Eseguite il 12 ottobre 2026 nel progetto di DCR, su `Classic/Map_Level_Lane`, con lo stesso
+script della 0.3.0 (sei corse in Simulate, lettura a ogni frame). Rapporto: `FASE2_PROVE.md`,
+§10, nel progetto di DCR.
+
+| Prova | Esito |
+|---|---|
+| 1. Compilare con `Build.bat` | passata: nessun errore né avviso |
+| 2. `reference/check_in_unreal.py` | passata: «CrowdEvents 0.3.1: 1228 casi su 1228 uguali al riferimento Python» |
+| 3. Regressione degli stati (prove 4-7 della 0.3.0) | passata: 0 violazioni e conteggi del gestore sempre uguali a quelli dei componenti. *Street performer*: 20 su 20 si accorgono, 15 schivano e 5 sostano. *Fire*: 20 in fuga, a stato 0 un frame dopo la fine dell'evento. *Fallen person*: mai più di 2 soccorritori insieme. Training: senza stato 5, 4 e 5 pedoni su 20 (14 su 60) |
+| 4. Sosta persa oltre il raggio di percezione | passata: la transizione è scattata 28 volte in quattro corse, sempre entro 0,5 m oltre il raggio. Nessun pedone non arrivato è rimasto nello stato 2 oltre il raggio |
+| 5. Cerchi degli stati nella vista Top | passata sulle schermate dello schermo: cerchi gialli, blu, verdi e rossi visibili. L'arancione non è capitato nelle schermate |
+| 6. Pannello: clic di piazzamento, *End event*, *Remove*, *Start*, *Stop*, testo «Rules: training», schermata | da fare a mano: lista in `FASE2_PROVE.md`, §7 |
+
+Notato durante le prove:
+
+- Chi è «arrivato» (per un momento quasi fermo sull'anello o a contatto) e poi riparte resta
+  nello stato 2 anche oltre il raggio di percezione, finché non scade il tempo della sosta: 7
+  pedoni in quattro corse. È ciò che il codice prevede; oggi capita perché la policy non si ferma.
+- Il marcatore resta un ostacolo per la policy finché `CastRays` non distingue l'evento: in due
+  corse su sei si è formato un ingorgo attorno all'evento (con *Fire*, 18 pedoni su 20 ancora
+  nel livello dopo 40 s; nelle altre corse l'ultimo arriva fra 22 e 28 s).
+- Nel pannello la casella si chiama ancora «Show a coloured dot on reacting pedestrians».
