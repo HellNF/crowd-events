@@ -8,7 +8,8 @@
 
 namespace
 {
-	const double UnitsToMeters = 0.01;
+	// Nome diverso da quello di CrowdEventsSubsystem.cpp: nella compilazione unity i due file sono una sola unità.
+	const double ReactionUnitsToMeters = 0.01;
 }
 
 UCrowdReactionComponent::UCrowdReactionComponent()
@@ -94,7 +95,7 @@ double UCrowdReactionComponent::GetDistanceToEventM() const
 	{
 		return -1.0;
 	}
-	return FVector::Dist2D(Owner->GetActorLocation(), Current->GetActorLocation()) * UnitsToMeters;
+	return FVector::Dist2D(Owner->GetActorLocation(), Current->GetActorLocation()) * ReactionUnitsToMeters;
 }
 
 double UCrowdReactionComponent::GetEffectiveBeta() const
@@ -105,7 +106,7 @@ double UCrowdReactionComponent::GetEffectiveBeta() const
 double UCrowdReactionComponent::GetSpeedMS() const
 {
 	const AActor* Owner = GetOwner();
-	return Owner ? Owner->GetVelocity().Size2D() * UnitsToMeters : 0.0;
+	return Owner ? Owner->GetVelocity().Size2D() * ReactionUnitsToMeters : 0.0;
 }
 
 double UCrowdReactionComponent::GetLingerTargetRadiusM() const
@@ -141,7 +142,7 @@ TArray<float> UCrowdReactionComponent::GetEventObservations() const
 	Observations[6 + static_cast<int32>(Current->Params.EventClass)] = 1.f;
 
 	const double PerceptionRadiusM = FMath::Max(Current->Params.PerceptionRadiusM, 0.01);
-	const FVector ToEvent = (Current->GetActorLocation() - Owner->GetActorLocation()) * UnitsToMeters;
+	const FVector ToEvent = (Current->GetActorLocation() - Owner->GetActorLocation()) * ReactionUnitsToMeters;
 	const FVector Forward = Owner->GetActorForwardVector().GetSafeNormal2D();
 	const FVector Right = Owner->GetActorRightVector().GetSafeNormal2D();
 	// Dopo una fuga l'evento può essere oltre il raggio di percezione: il valore si ferma a ±2.
