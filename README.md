@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.2`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.3`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -94,7 +94,7 @@ Da fare a mano, dopo aver aggiunto il componente `Crowd Reaction` a `BP_Pawn`.
 | `BP_AgentInteractor`, raccolta delle osservazioni | `Get Event Observations` | i 12 valori sugli eventi, nell'ordine dello schema |
 | `BP_AgentTrainer.GatherAgentReward` | `Get Reward Multipliers`, `Get Event Reward` | reward = somma dei cinque termini di DCR, ciascuno per il suo moltiplicatore, più `Get Event Reward` |
 | `BP_Pawn.ComputeDesiredVelocity` | `Get Speed Target MS`, `Get Max Walk Speed Cm`, `Counts In Neighbour Average` | bersaglio di velocità e velocità massima per stato; nella media dei vicini solo chi ha il terzo nodo vero |
-| `BP_Pawn.CastRays` | cast dell'attore colpito a `Crowd Event` | indicatore «colpisce un evento» del raggio; l'evento non accende l'indicatore di ostacolo e non entra nella `HitMap` |
+| `BP_Pawn.CastRays` | `Is Reacting To`, con l'attore colpito dal raggio | se vero: indicatore «colpisce un evento» acceso, indicatore di ostacolo spento, attore fuori dalla `HitMap`; se falso nulla cambia, quindi per chi è nello stato 0 l'evento è un ostacolo |
 | `BP_Pawn.SaveData` | `Get State Index`, `Get Event Id`, `Get Distance To Event M` | registro degli stati |
 
 `Get Event Reward` va chiamato una volta per decisione: il termine di fuga confronta la
@@ -215,3 +215,11 @@ Scritta il 12 ottobre 2026 dopo le prove della 0.3.1, non ancora compilata.
 - Chi sosta e si allontana oltre il raggio di percezione torna allo stato 0 anche se era già
   arrivato sul bersaglio (nella 0.3.1 solo se non era ancora arrivato).
 - Nel pannello la casella degli stati parla di cerchio e non più di punto.
+
+## Versione 0.3.3
+
+Scritta il 12 ottobre 2026, non ancora compilata.
+
+- Nodo `Is Reacting To` del componente, per `CastRays`: l'evento è escluso da ostacoli e
+  penalità sociale solo per chi sta reagendo proprio a quell'evento. Per chi è nello stato 0
+  resta un ostacolo (deciso il 12 ottobre 2026), così non lo attraversa.

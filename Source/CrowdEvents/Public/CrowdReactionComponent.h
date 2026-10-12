@@ -64,6 +64,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	ACrowdEvent* GetEvent() const;
 
+	/**
+	 * Vero se l'attore è l'evento a cui il pedone sta reagendo. Per CastRays: solo in questo
+	 * caso il raggio segna «colpisce un evento» e l'attore resta fuori da ostacoli e HitMap.
+	 * Per chi è nello stato 0, e per ogni altro evento, l'evento è un ostacolo come gli altri.
+	 */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	bool IsReactingTo(const AActor* Actor) const;
+
 	/** Stato come numero da 0 a 3, per il registro di SaveData. */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	int32 GetStateIndex() const { return static_cast<int32>(State); }

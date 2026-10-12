@@ -81,6 +81,11 @@ ACrowdEvent* UCrowdReactionComponent::GetEvent() const
 	return Event.Get();
 }
 
+bool UCrowdReactionComponent::IsReactingTo(const AActor* Actor) const
+{
+	return Actor && State != ECrowdReactionState::None && Event.Get() == Actor;
+}
+
 int32 UCrowdReactionComponent::GetEventId() const
 {
 	const ACrowdEvent* Current = Event.Get();
