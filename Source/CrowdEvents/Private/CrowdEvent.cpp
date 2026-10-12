@@ -40,6 +40,8 @@ ACrowdEvent::ACrowdEvent()
 	Marker->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Marker->SetCollisionResponseToAllChannels(ECR_Ignore);
 	Marker->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	// «Visibility2» di DCR (TraceTypeQuery3): il canale dei raggi delle zone con NewVisibilityTrace.
+	Marker->SetCollisionResponseToChannel(ECC_GameTraceChannel1, ECR_Block);
 	Marker->SetCanEverAffectNavigation(false);
 
 	// Figura provvisoria: un disco a terra, finché non ci sono i manichini.
