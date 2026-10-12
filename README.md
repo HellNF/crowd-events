@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.1`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.2`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -207,3 +207,11 @@ Notato durante le prove:
   corse su sei si è formato un ingorgo attorno all'evento (con *Fire*, 18 pedoni su 20 ancora
   nel livello dopo 40 s; nelle altre corse l'ultimo arriva fra 22 e 28 s).
 - Nel pannello la casella si chiama ancora «Show a coloured dot on reacting pedestrians».
+
+## Versione 0.3.2
+
+Scritta il 12 ottobre 2026 dopo le prove della 0.3.1, non ancora compilata.
+
+- Chi sosta e si allontana oltre il raggio di percezione torna allo stato 0 anche se era già
+  arrivato sul bersaglio (nella 0.3.1 solo se non era ancora arrivato).
+- Nel pannello la casella degli stati parla di cerchio e non più di punto.

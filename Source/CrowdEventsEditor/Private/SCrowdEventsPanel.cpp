@@ -600,7 +600,7 @@ void SCrowdEventsPanel::Construct(const FArguments& InArgs)
 			.IsChecked_Lambda([]() { return UCrowdEventsSubsystem::bDrawStates ? ECheckBoxState::Checked : ECheckBoxState::Unchecked; })
 			.OnCheckStateChanged_Lambda([](ECheckBoxState State) { UCrowdEventsSubsystem::bDrawStates = State == ECheckBoxState::Checked; })
 			[
-				SNew(STextBlock).Text(LOCTEXT("DrawStates", "Show a coloured dot on reacting pedestrians"))
+				SNew(STextBlock).Text(LOCTEXT("DrawStates", "Show a coloured circle on reacting pedestrians"))
 			]
 		]
 		+ SScrollBox::Slot()

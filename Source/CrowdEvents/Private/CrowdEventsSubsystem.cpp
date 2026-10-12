@@ -233,14 +233,14 @@ void UCrowdEventsSubsystem::UpdateTransitions(UCrowdReactionComponent& Reaction,
 	case ECrowdReactionState::Linger:
 	{
 		Reaction.LingerElapsedS += DeltaTimeS;
+		// Chi si è allontanato oltre il raggio di percezione ha perso l'evento, anche se era già arrivato.
+		if (Distance > Current->Params.PerceptionRadiusM)
+		{
+			Reaction.ClearReaction();
+			break;
+		}
 		if (!Reaction.bArrived)
 		{
-			// Chi si è allontanato oltre il raggio di percezione senza fermarsi ha perso l'evento.
-			if (Distance > Current->Params.PerceptionRadiusM)
-			{
-				Reaction.ClearReaction();
-				break;
-			}
 			const bool bRescuer = Reaction.Role == ECrowdReactionRole::Rescuer;
 			const double Gap = Distance - Reaction.GetLingerTargetRadiusM();
 			// Chi soccorre è arrivato quando tocca; chi guarda quando è fermo sull'anello.
