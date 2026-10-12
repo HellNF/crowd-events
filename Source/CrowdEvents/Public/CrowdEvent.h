@@ -46,9 +46,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Crowd Events")
 	void EndEvent();
 
+	/** Numero progressivo dato dal gestore all'avvio della simulazione; -1 prima. */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	int32 GetEventId() const { return EventId; }
+
 	/** Disegna anello e raggio di percezione di tutti gli eventi; lo comanda il pannello. */
 	static bool bDrawDebug;
 
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void Tick(float DeltaSeconds) override;
 	// I cerchi si vedono anche a simulazione ferma.
 	virtual bool ShouldTickIfViewportsOnly() const override { return true; }
@@ -62,6 +68,9 @@ protected:
 	TObjectPtr<UStaticMeshComponent> Figure;
 
 private:
+	friend class UCrowdEventsSubsystem;
+
+	int32 EventId = -1;
 	double ElapsedS = 0.0;
 	bool bEnded = false;
 };

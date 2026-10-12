@@ -4,6 +4,7 @@
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "CrowdEvent.h"
 #include "CrowdEventPlacementMode.h"
+#include "CrowdEventsSubsystem.h"
 #include "Editor.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -590,6 +591,36 @@ void SCrowdEventsPanel::Construct(const FArguments& InArgs)
 			[
 				SNew(STextBlock).Text(LOCTEXT("DrawDebug", "Show ring and perception radius"))
 			]
+		]
+		+ SScrollBox::Slot()
+		.Padding(FMargin(8.f, 4.f))
+		[
+			SNew(SCheckBox)
+			.ToolTipText(LOCTEXT("DrawStatesTip", "Yellow: avoiding. Orange: keeping away after fleeing. Blue: watching. Green: helping. Red: fleeing."))
+			.IsChecked_Lambda([]() { return UCrowdEventsSubsystem::bDrawStates ? ECheckBoxState::Checked : ECheckBoxState::Unchecked; })
+			.OnCheckStateChanged_Lambda([](ECheckBoxState State) { UCrowdEventsSubsystem::bDrawStates = State == ECheckBoxState::Checked; })
+			[
+				SNew(STextBlock).Text(LOCTEXT("DrawStates", "Show a coloured dot on reacting pedestrians"))
+			]
+		]
+		+ SScrollBox::Slot()
+		.Padding(FMargin(8.f, 4.f))
+		[
+			SNew(STextBlock)
+			.Text_Lambda([]()
+			{
+				const UWorld* World = GetTargetWorld();
+				const UCrowdEventsSubsystem* Subsystem = World ? World->GetSubsystem<UCrowdEventsSubsystem>() : nullptr;
+				if (!Subsystem)
+				{
+					return LOCTEXT("StatesIdle", "Pedestrian states are shown while the simulation runs.");
+				}
+				return FText::Format(LOCTEXT("StatesCount", "Avoiding {0} · Lingering {1} · Fleeing {2} · Rules: {3}"),
+					FText::AsNumber(Subsystem->CountInState(ECrowdReactionState::Avoid)),
+					FText::AsNumber(Subsystem->CountInState(ECrowdReactionState::Linger)),
+					FText::AsNumber(Subsystem->CountInState(ECrowdReactionState::Flee)),
+					Subsystem->GetRuleSet() == ECrowdRuleSet::Training ? LOCTEXT("RulesTraining", "training") : LOCTEXT("RulesDemo", "demonstration"));
+			})
 		]
 		+ SScrollBox::Slot()
 		.Padding(FMargin(8.f, 4.f))

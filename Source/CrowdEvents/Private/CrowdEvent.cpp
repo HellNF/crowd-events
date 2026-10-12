@@ -1,5 +1,6 @@
 #include "CrowdEvent.h"
 
+#include "CrowdEventsSubsystem.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -86,6 +87,30 @@ void ACrowdEvent::EndEvent()
 	bEnded = true;
 	Marker->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Figure->SetVisibility(false);
+}
+
+void ACrowdEvent::BeginPlay()
+{
+	Super::BeginPlay();
+	if (UWorld* World = GetWorld())
+	{
+		if (UCrowdEventsSubsystem* Subsystem = World->GetSubsystem<UCrowdEventsSubsystem>())
+		{
+			Subsystem->RegisterEvent(this);
+		}
+	}
+}
+
+void ACrowdEvent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (UWorld* World = GetWorld())
+	{
+		if (UCrowdEventsSubsystem* Subsystem = World->GetSubsystem<UCrowdEventsSubsystem>())
+		{
+			Subsystem->UnregisterEvent(this);
+		}
+	}
+	Super::EndPlay(EndPlayReason);
 }
 
 void ACrowdEvent::Tick(float DeltaSeconds)
