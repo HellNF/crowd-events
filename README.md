@@ -5,9 +5,9 @@ come campi attrattivi e repulsivi. Espone le formule ai Blueprint come nodi dell
 «Crowd Events», mette gli eventi nel livello come attori e aggiunge all'editor il pannello
 «Crowd Events». Le distanze sono in metri.
 
-Stato: versione 0.3.0, **scritta ma non ancora compilata**. Aggiunge alla 0.2.0 (compilata e
-provata con Unreal 5.4.4 il 9 ottobre 2026) le formule della reward, il componente di reazione
-del pedone e il gestore degli stati. Gli eventi influenzano i pedoni solo dopo aver aggiunto il
+Stato: versione 0.3.0, compilata e provata con Unreal 5.4.4 il 12 ottobre 2026 (esiti in fondo).
+Aggiunge alla 0.2.0 le formule della reward, il componente di reazione del pedone e il gestore
+degli stati. Gli eventi influenzano i pedoni solo dopo aver aggiunto il
 componente a `BP_Pawn` e i nodi di chiamata nei Blueprint di DCR (sezione «Collegamenti»).
 
 ## Moduli
@@ -144,19 +144,31 @@ debug.
 
 ## Prove della 0.3.0 sul remoto
 
-Da eseguire nel progetto di DCR.
+Eseguite il 12 ottobre 2026 nel progetto di DCR, su `Classic/Map_Level_Lane`; i numeri sono
+letti da script (`CountInState`, `CountRescuers`, componenti dei pedoni) a ogni frame. Il
+rapporto completo è `FASE2_PROVE.md` nel progetto di DCR.
 
 | Prova | Esito |
 |---|---|
-| 1. Compilare con `Build.bat`; il codice è stato scritto senza compilatore, errori piccoli sono possibili | da fare |
-| 2. Eseguire `reference/check_in_unreal.py` nell'editor: nel log «1228 casi su 1228 uguali al riferimento Python» | da fare |
-| 3. Verificare su quale canale di collisione viaggiano i raggi delle zone con `NewVisibilityTrace` (`Visibility2`): il marcatore dell'evento oggi blocca solo `Visibility` | da fare |
-| 4. Aggiungere `Crowd Reaction` a `BP_Pawn`, senza altri collegamenti; in Simulate su `Classic/Map_Level_Lane` piazzare *Street performer*: sui pedoni entro 10 m compaiono punti gialli (schiva) o blu (sosta), e il conteggio nel pannello cambia | da fare |
-| 5. Con *Fire*: punti rossi; oltre 15 m diventano arancioni; a evento finito spariscono | da fare |
-| 6. Con *Fallen person*: al più due punti verdi insieme | da fare |
-| 7. Con `CrowdEvents.Training 1` in console: il pannello mostra «Rules: training» e circa un pedone su cinque resta senza punto | da fare |
+| 1. Compilare con `Build.bat`; il codice è stato scritto senza compilatore, errori piccoli sono possibili | passata dopo una correzione: `UnitsToMeters` era definita nel namespace anonimo di due `.cpp` della stessa unità unity |
+| 2. Eseguire `reference/check_in_unreal.py` nell'editor: nel log «1228 casi su 1228 uguali al riferimento Python» | passata: 1228 su 1228 |
+| 3. Verificare su quale canale di collisione viaggiano i raggi delle zone con `NewVisibilityTrace` (`Visibility2`): il marcatore dell'evento oggi blocca solo `Visibility` | fatta: `Visibility2` è `ECC_GameTraceChannel1` (`TraceTypeQuery3`); ora il marcatore blocca anche quello |
+| 4. Aggiungere `Crowd Reaction` a `BP_Pawn`, senza altri collegamenti; in Simulate su `Classic/Map_Level_Lane` piazzare *Street performer*: sui pedoni entro 10 m compaiono punti gialli (schiva) o blu (sosta), e il conteggio nel pannello cambia | stati passati da script: 19 pedoni su 20 si accorgono, 12 schivano e 7 sostano, tutti assegnati entro 10 m. Punti e pannello non visti: nella vista Top i punti non si vedono (vedi sotto) |
+| 5. Con *Fire*: punti rossi; oltre 15 m diventano arancioni; a evento finito spariscono | stati passati da script: 20 in fuga, passaggio a «dopo la fuga» fra 15,00 e 15,11 m, tutti a stato 0 un frame dopo la fine dell'evento |
+| 6. Con *Fallen person*: al più due punti verdi insieme | passata da script: mai più di 2 soccorritori insieme su 843 frame (3 diversi nel tempo: il terzo subentra quando uno esce dal livello) |
+| 7. Con `CrowdEvents.Training 1` in console: il pannello mostra «Rules: training» e circa un pedone su cinque resta senza punto | regole passate da script: `Get Rule Set` = Training; senza stato 5, 4 e 5 pedoni su 20 in tre corse (14 su 60, 23%). Testo del pannello non visto |
 
 Nelle prove 4-7 i pedoni non cambiano comportamento: la policy non riceve ancora nulla. Si
 controlla solo che gli stati siano assegnati come previsto. Senza la prova 4 dei
 collegamenti (`Reset Reaction` al reset), in training un pedone riportato alla partenza
 conserva gli eventi già incontrati.
+
+Notato durante le prove:
+
+- `DrawDebugPoint` nelle viste ortografiche (Top) disegna punti di dimensione quasi nulla: i
+  punti degli stati si vedono solo in prospettiva. I cerchi degli eventi si vedono in entrambe.
+- Finché `CastRays` non distingue l'evento (sezione «Collegamenti»), il marcatore è per la policy
+  un ostacolo: in una corsa con *Fire* quattro pedoni si sono fermati a ridosso del marcatore e
+  l'ultimo è arrivato al goal dopo 35 s, contro i 22-25 s delle altre corse.
+- Chi sosta senza fermarsi (oggi tutti: la policy non riceve nulla) resta nello stato 2 anche
+  oltre il raggio di percezione, fino a 30 s dall'assegnazione.
