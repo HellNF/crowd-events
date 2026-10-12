@@ -235,6 +235,12 @@ void UCrowdEventsSubsystem::UpdateTransitions(UCrowdReactionComponent& Reaction,
 		Reaction.LingerElapsedS += DeltaTimeS;
 		if (!Reaction.bArrived)
 		{
+			// Chi si è allontanato oltre il raggio di percezione senza fermarsi ha perso l'evento.
+			if (Distance > Current->Params.PerceptionRadiusM)
+			{
+				Reaction.ClearReaction();
+				break;
+			}
 			const bool bRescuer = Reaction.Role == ECrowdReactionRole::Rescuer;
 			const double Gap = Distance - Reaction.GetLingerTargetRadiusM();
 			// Chi soccorre è arrivato quando tocca; chi guarda quando è fermo sull'anello.
@@ -398,6 +404,8 @@ void UCrowdEventsSubsystem::DrawStates() const
 			continue;
 		}
 		const FVector Location = Reaction->GetOwner()->GetActorLocation() + FVector(0.0, 0.0, 120.0);
-		DrawDebugPoint(World, Location, 14.f, StateColor(Reaction->GetState(), Reaction->GetRole()), false, -1.f, 0);
+		// Un cerchio e non un punto: nelle viste ortografiche DrawDebugPoint non si vede.
+		DrawDebugCircle(World, Location, 25.f, 12, StateColor(Reaction->GetState(), Reaction->GetRole()), false, -1.f, 0, 8.f,
+			FVector::XAxisVector, FVector::YAxisVector, false);
 	}
 }

@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.0`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.1`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -172,3 +172,13 @@ Notato durante le prove:
   l'ultimo è arrivato al goal dopo 35 s, contro i 22-25 s delle altre corse.
 - Chi sosta senza fermarsi (oggi tutti: la policy non riceve nulla) resta nello stato 2 anche
   oltre il raggio di percezione, fino a 30 s dall'assegnazione.
+
+## Versione 0.3.1
+
+Scritta il 12 ottobre 2026 dopo le prove della 0.3.0, non ancora compilata.
+
+- Gli stati si disegnano con un cerchio di 25 cm sopra il pedone, non più con un punto: si
+  vedono anche nella vista Top.
+- Chi deve sostare e si allontana oltre il raggio di percezione senza essersi fermato torna
+  allo stato 0, invece di restare nello stato 2 fino a 30 s.
+- Tolto dal repository il file `.pyc` committato per errore.

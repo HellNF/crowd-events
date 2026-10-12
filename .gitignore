@@ -2,3 +2,5 @@ Binaries/
 Intermediate/
 *.pdb
 .vs/
+__pycache__/
+*.pyc
