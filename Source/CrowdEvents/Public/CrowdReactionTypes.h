@@ -124,11 +124,12 @@ struct CROWDEVENTS_API FCrowdReactionSettings
 	double ArrivalSpeedMS = 0.2;
 
 	/**
-	 * Nello stato 0 tutte le osservazioni sugli eventi valgono zero, bit dello stato
-	 * compreso: sono gli stessi ingressi con cui è stata addestrata la baseline.
+	 * Se vero, nello stato 0 tutte le osservazioni sugli eventi valgono zero, bit dello stato
+	 * compreso. Falso: nello stato 0 il bit dello stato 0 vale 1, cioè [1, 0, …, 0], gli
+	 * ingressi con cui è stata addestrata la baseline (verificato sul remoto).
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
-	bool bNeutralStateAsZeros = true;
+	bool bNeutralStateAsZeros = false;
 };
 
 /** Parametri delle regole di assegnazione (specifica §5.2-5.4, §9.3). Valori iniziali, da tarare. */

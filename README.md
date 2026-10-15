@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.3`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.4`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -73,8 +73,9 @@ tornano allo stato 0.
 
 Scelte fatte scrivendo il codice, non presenti nella specifica:
 
-- nello stato 0 le 12 osservazioni sugli eventi valgono tutte zero, bit dello stato compreso
-  (`bNeutralStateAsZeros`): sono gli ingressi con cui è stata addestrata la baseline;
+- nello stato 0 le 12 osservazioni sugli eventi valgono [1, 0, …, 0]: acceso il solo bit dello
+  stato 0, come negli ingressi con cui è stata addestrata la baseline. Con `bNeutralStateAsZeros`
+  vero valgono tutte zero (fino alla 0.3.3 era il valore iniziale, per errore);
 - il premio di uscita dalla fuga si dà una sola volta per evento e per pedone, altrimenti
   rientrare e riuscire dalla distanza di sicurezza converrebbe;
 - chi deve sostare e non raggiunge il bersaglio entro 30 s passa allo stato 1;
@@ -223,3 +224,11 @@ Scritta il 12 ottobre 2026, non ancora compilata.
 - Nodo `Is Reacting To` del componente, per `CastRays`: l'evento è escluso da ostacoli e
   penalità sociale solo per chi sta reagendo proprio a quell'evento. Per chi è nello stato 0
   resta un ostacolo (deciso il 12 ottobre 2026), così non lo attraversa.
+
+## Versione 0.3.4
+
+Scritta il 15 ottobre 2026, non ancora compilata.
+
+- `bNeutralStateAsZeros` parte da falso: nello stato 0 le 12 osservazioni sugli eventi valgono
+  [1, 0, …, 0], come nella baseline (dalla verifica di `CastRays` sul remoto: la baseline è
+  addestrata con questo vettore, non con dodici zeri). Nient'altro cambia.
