@@ -58,6 +58,30 @@ public:
 	static double RingRadius(const FCrowdEventField& Field, double Alpha, double Beta, double ContactDistanceM = 0.8);
 
 	/** Raggio della bolla, in metri: l'anello del pedone tipico più lo spessore del cerchio (specifica §4.3). */
+	/**
+	 * Intensità repulsiva che, con α = β = 1, dà un anello di RingRadiusM: l'inversa di RingRadius.
+	 * Se il campo non può avere un anello (attrazione nulla, decadimenti non validi) restituisce
+	 * l'intensità repulsiva che ha già.
+	 */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	static double RepulsiveIntensityForRing(const FCrowdEventField& Field, double RingRadiusM);
+
+	/**
+	 * Il campo con l'intensità repulsiva corretta perché l'anello, con α = β = 1, resti fra
+	 * MinRingM e MaxRingM. I campi senza anello, come quelli del pericolo, tornano invariati.
+	 */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	static FCrowdEventField ClampFieldRing(const FCrowdEventField& Field, double MinRingM = 1.0, double MaxRingM = 5.0);
+
+	/**
+	 * Campo di un evento con anello, per l'addestramento: l'anello è estratto uniforme fra MinRingM
+	 * e MaxRingM, gli altri parametri dentro gli intervalli di addestramento, e l'intensità
+	 * repulsiva è ricavata dall'anello. Se l'intensità esce dal suo intervallo si estraggono di
+	 * nuovo gli altri parametri, tenendo l'anello.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Crowd Events")
+	static FCrowdEventField SampleRingField(UPARAM(ref) const FRandomStream& Stream, double MinRingM = 1.0, double MaxRingM = 5.0);
+
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	static double BubbleRadius(const FCrowdEventField& Field, double ContactDistanceM = 0.8, double RingWidthM = 1.5);
 

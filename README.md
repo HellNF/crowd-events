@@ -40,10 +40,12 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.5`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.6`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
+| `Repulsive Intensity For Ring`, `Clamp Field Ring` | intensità repulsiva che dà un anello scelto; campo con l'anello riportato fra 1 e 5 m |
+| `Sample Ring Field` | campo di un evento per l'addestramento, con l'anello estratto uniforme fra 1 e 5 m |
 | `Reference Radius` | distanza di riferimento per stato e ruolo; -1 negli stati 0 e 3 |
 | `Avoid Reward`, `Safe Wall Reward` | stato 1: bolla, e muro alla distanza di sicurezza dopo la fuga |
 | `Linger Reward`, `Linger Speed Target`, `Linger Speed Reward` | stato 2: anello o contatto, velocità bersaglio e termine di velocità |
@@ -104,7 +106,7 @@ distanza con quella della chiamata precedente.
 ## Riferimento Python
 
 `reference/crowd_events_reference.py` contiene le stesse formule in Python.
-`reference/generate_cases.py` scrive `reference/cases.json` (1228 casi con ingressi e valori
+`reference/generate_cases.py` scrive `reference/cases.json` (1268 casi con ingressi e valori
 attesi). `reference/check_in_unreal.py` va eseguito dentro l'editor, con il plugin compilato:
 chiama i nodi C++ e li confronta con i casi, con tolleranza 1e-6.
 
@@ -243,3 +245,29 @@ Scritta il 19 ottobre 2026, non ancora compilata.
   non cambia, perché in sosta il termine di velocità di DCR è moltiplicato per 0; la reward
   aggiuntiva della sosta usa `Linger Speed Target`, che resta com'era, quindi i 1228 casi di
   confronto non cambiano.
+
+## Versione 0.3.6
+
+Scritta il 19 ottobre 2026, non ancora compilata.
+
+- **Tetto all'anello.** Con gli intervalli di addestramento dei quattro parametri del campo
+  l'anello poteva superare i 60 m (repulsione 10, decadimenti 6 e 8 m). Ora l'anello, con
+  α = β = 1, resta fra 1 e 5 m (`CrowdEvents::MinRingRadiusM`, `MaxRingRadiusM`).
+- `Repulsive Intensity For Ring`: l'inversa di `Ring Radius`. `Clamp Field Ring`: corregge
+  l'intensità repulsiva perché l'anello resti fra i due estremi; i campi senza anello, come
+  quello del pericolo, restano invariati.
+- `Sample Ring Field`, per gli stadi del curriculum: estrae l'anello uniforme fra 1 e 5 m, poi
+  interesse (0,5–2), decadimento repulsivo (0,5–2 m) e attrattivo (da 2 m, e almeno 1 m più del
+  repulsivo, fino a 8 m), e ricava l'intensità repulsiva dall'anello. Se questa esce
+  dall'intervallo 0,385–10 si estraggono di nuovo gli altri parametri, tenendo l'anello, così
+  la distribuzione degli anelli resta uniforme (dalla simulazione: si accetta fra il 66% e il
+  98% dei tentativi, secondo l'anello).
+- Pannello: fuori dalla modalità avanzata, modificando uno dei quattro parametri del campo il
+  valore «Danger» si corregge da solo per tenere l'anello fra 1 e 5 m; una riga nuova mostra
+  l'anello di chi guarda e la bolla evitata da chi passa.
+- I preset non cambiano: anelli di 1,5 m (artista, anziano caduto) e 4,0 m (colluttazione).
+- `cases.json`: 40 casi nuovi per le due funzioni pure, 1268 in tutto. `Sample Ring Field` è
+  casuale e si controlla per proprietà nel riferimento Python (10.000 estrazioni: anello
+  ottenuto uguale a quello estratto, intensità repulsiva nell'intervallo).
+- L'anello personale dipende ancora da α e β, quindi può uscire di poco dall'intervallo:
+  il tetto vale per l'evento, non per il singolo pedone.

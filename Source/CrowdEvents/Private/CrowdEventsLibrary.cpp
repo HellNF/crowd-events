@@ -1,8 +1,9 @@
 #include "CrowdEventsLibrary.h"
+#include "CrowdEventTypes.h"
 
 FString UCrowdEventsLibrary::GetCrowdEventsVersion()
 {
-	return TEXT("0.3.5");
+	return TEXT("0.3.6");
 }
 
 double UCrowdEventsLibrary::PerceivedField(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM)
@@ -38,6 +39,67 @@ double UCrowdEventsLibrary::RingRadius(const FCrowdEventField& Field, double Alp
 	}
 
 	return (Field.RepulsiveDecayM * Field.AttractiveDecayM) / (Field.AttractiveDecayM - Field.RepulsiveDecayM) * FMath::Loge(Argument);
+}
+
+namespace
+{
+	bool HasRingShape(const FCrowdEventField& Field)
+	{
+		return Field.AttractiveIntensity > 0.0 && Field.RepulsiveDecayM > 0.0 && Field.AttractiveDecayM > Field.RepulsiveDecayM;
+	}
+
+	double RandomInRange(const FRandomStream& Stream, double Min, double Max)
+	{
+		return Min + (Max - Min) * static_cast<double>(Stream.GetFraction());
+	}
+}
+
+double UCrowdEventsLibrary::RepulsiveIntensityForRing(const FCrowdEventField& Field, double RingRadiusM)
+{
+	if (!HasRingShape(Field))
+	{
+		return Field.RepulsiveIntensity;
+	}
+	// Da RingRadius: anello = k ln(Brep λatt / (Batt λrep)), con k = λrep λatt / (λatt − λrep).
+	const double K = (Field.RepulsiveDecayM * Field.AttractiveDecayM) / (Field.AttractiveDecayM - Field.RepulsiveDecayM);
+	return Field.AttractiveIntensity * Field.RepulsiveDecayM / Field.AttractiveDecayM * FMath::Exp(RingRadiusM / K);
+}
+
+FCrowdEventField UCrowdEventsLibrary::ClampFieldRing(const FCrowdEventField& Field, double MinRingM, double MaxRingM)
+{
+	FCrowdEventField Result = Field;
+	if (!HasRingShape(Field))
+	{
+		return Result;
+	}
+	// Repulsione minima e massima che danno anelli agli estremi: l'anello cresce con la repulsione.
+	const double MinRepulsion = RepulsiveIntensityForRing(Field, MinRingM);
+	const double MaxRepulsion = RepulsiveIntensityForRing(Field, MaxRingM);
+	Result.RepulsiveIntensity = FMath::Clamp(Field.RepulsiveIntensity, MinRepulsion, MaxRepulsion);
+	return Result;
+}
+
+FCrowdEventField UCrowdEventsLibrary::SampleRingField(const FRandomStream& Stream, double MinRingM, double MaxRingM)
+{
+	double RepulsionMin = 0.0;
+	double RepulsionMax = 0.0;
+	CrowdEvents::GetTrainingRange(ECrowdEventParameter::RepulsiveIntensity, RepulsionMin, RepulsionMax);
+
+	const double RingM = RandomInRange(Stream, MinRingM, MaxRingM);
+	FCrowdEventField Field;
+	for (int32 Attempt = 0; Attempt < 100; ++Attempt)
+	{
+		Field.AttractiveIntensity = RandomInRange(Stream, 0.5, 2.0);
+		Field.RepulsiveDecayM = RandomInRange(Stream, 0.5, 2.0);
+		Field.AttractiveDecayM = RandomInRange(Stream, FMath::Max(2.0, Field.RepulsiveDecayM + 1.0), 8.0);
+		Field.RepulsiveIntensity = RepulsiveIntensityForRing(Field, RingM);
+		if (Field.RepulsiveIntensity >= RepulsionMin && Field.RepulsiveIntensity <= RepulsionMax)
+		{
+			break;
+		}
+	}
+	// Dopo 100 tentativi (non succede con questi intervalli) resta l'ultimo campo: l'anello è comunque RingM.
+	return Field;
 }
 
 double UCrowdEventsLibrary::BubbleRadius(const FCrowdEventField& Field, double ContactDistanceM, double RingWidthM)

@@ -190,11 +190,20 @@ TSharedRef<SWidget> SCrowdEventsPanel::MakeParameterRow(const FText& Label, cons
 				ACrowdEvent* Event = GetSelectedEvent();
 				return Event ? *Access(*Event) : 0.0;
 			})
-			.OnValueChanged_Lambda([this, Access](double NewValue)
+			.OnValueChanged_Lambda([this, Access, Parameter](double NewValue)
 			{
 				if (ACrowdEvent* Event = GetSelectedEvent())
 				{
 					*Access(*Event) = NewValue;
+					// Fuori dalla modalità avanzata anche l'anello resta nell'intervallo di addestramento.
+					const bool bFieldParameter = Parameter == ECrowdEventParameter::AttractiveIntensity
+						|| Parameter == ECrowdEventParameter::RepulsiveIntensity
+						|| Parameter == ECrowdEventParameter::RepulsiveDecayM
+						|| Parameter == ECrowdEventParameter::AttractiveDecayM;
+					if (bFieldParameter && !bAdvanced)
+					{
+						Event->Params.Field = UCrowdEventsLibrary::ClampFieldRing(Event->Params.Field, CrowdEvents::MinRingRadiusM, CrowdEvents::MaxRingRadiusM);
+					}
 					// A simulazione ferma la modifica va salvata con il livello.
 					if (Event->GetWorld() && !Event->GetWorld()->IsGameWorld())
 					{
@@ -554,6 +563,30 @@ void SCrowdEventsPanel::Construct(const FArguments& InArgs)
 				LOCTEXT("AttractiveDecayTip", "Distance over which the attraction fades."),
 				ECrowdEventParameter::AttractiveDecayM,
 				[](ACrowdEvent& Event) { return &Event.Params.Field.AttractiveDecayM; })
+		]
+		+ SScrollBox::Slot()
+		.Padding(FMargin(8.f, 4.f))
+		[
+			SNew(STextBlock)
+			.ToolTipText(LOCTEXT("RingInfoTip", "Computed from the four values above. Outside advanced mode the ring stays between 1 and 5 m: the Danger value is adjusted to keep it there."))
+			.Text_Lambda([this]()
+			{
+				const ACrowdEvent* Event = GetSelectedEvent();
+				if (!Event)
+				{
+					return FText::GetEmpty();
+				}
+				const FCrowdEventField& Field = Event->Params.Field;
+				if (Event->Params.EventClass == ECrowdEventClass::Danger || Field.AttractiveIntensity <= 0.0)
+				{
+					return LOCTEXT("RingInfoNone", "No ring: pedestrians do not stop here.");
+				}
+				FNumberFormattingOptions TwoDigits;
+				TwoDigits.SetMinimumFractionalDigits(2).SetMaximumFractionalDigits(2);
+				return FText::Format(LOCTEXT("RingInfo", "Watching ring: {0} m. Bubble avoided by passers-by: {1} m."),
+					FText::AsNumber(UCrowdEventsLibrary::RingRadius(Field, 1.0, 1.0), &TwoDigits),
+					FText::AsNumber(UCrowdEventsLibrary::BubbleRadius(Field), &TwoDigits));
+			})
 		]
 		+ SScrollBox::Slot()
 		[

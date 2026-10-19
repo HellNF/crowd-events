@@ -18676,6 +18676,574 @@
   "expected": -0.25
  },
  {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   1.0
+  ],
+  "expected": 0.5292500041531687
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   1.5
+  ],
+  "expected": 0.7700542122295078
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   3.0
+  ],
+  "expected": 2.3719339590896316
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   5.0
+  ],
+  "expected": 10.630270500015696
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   1.0,
+   0.77,
+   1.0,
+   4.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    5.0,
+    1.0,
+    4.0
+   ],
+   1.0
+  ],
+  "expected": 0.5292500041531687
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    5.0,
+    1.0,
+    4.0
+   ],
+   1.5
+  ],
+  "expected": 0.7700542122295078
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    5.0,
+    1.0,
+    4.0
+   ],
+   3.0
+  ],
+  "expected": 2.3719339590896316
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    5.0,
+    1.0,
+    4.0
+   ],
+   5.0
+  ],
+  "expected": 10.630270500015696
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    1.0,
+    5.0,
+    1.0,
+    4.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   1.0,
+   5.0,
+   1.0,
+   4.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   1.0
+  ],
+  "expected": 0.5292500041531687
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   1.5
+  ],
+  "expected": 0.7700542122295078
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   3.0
+  ],
+  "expected": 2.3719339590896316
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   5.0
+  ],
+  "expected": 10.630270500015696
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    1.0,
+    0.77,
+    1.0,
+    4.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   1.0,
+   0.77,
+   1.0,
+   4.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.0,
+    1.0,
+    3.0,
+    4.0
+   ],
+   1.0
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.0,
+    1.0,
+    3.0,
+    4.0
+   ],
+   1.5
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.0,
+    1.0,
+    3.0,
+    4.0
+   ],
+   3.0
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.0,
+    1.0,
+    3.0,
+    4.0
+   ],
+   5.0
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    0.0,
+    1.0,
+    3.0,
+    4.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   0.0,
+   1.0,
+   3.0,
+   4.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    10.0,
+    6.0,
+    8.0
+   ],
+   1.0
+  ],
+  "expected": 0.7819101788924936
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    10.0,
+    6.0,
+    8.0
+   ],
+   1.5
+  ],
+  "expected": 0.7983708441883945
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    10.0,
+    6.0,
+    8.0
+   ],
+   3.0
+  ],
+  "expected": 0.8498613398001198
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    10.0,
+    6.0,
+    8.0
+   ],
+   5.0
+  ],
+  "expected": 0.9237177317602873
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    1.0,
+    10.0,
+    6.0,
+    8.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   1.0,
+   0.9237177317602873,
+   6.0,
+   8.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.1,
+    1.0,
+    4.0
+   ],
+   1.0
+  ],
+  "expected": 0.5292500041531687
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.1,
+    1.0,
+    4.0
+   ],
+   1.5
+  ],
+  "expected": 0.7700542122295078
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.1,
+    1.0,
+    4.0
+   ],
+   3.0
+  ],
+  "expected": 2.3719339590896316
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    1.0,
+    0.1,
+    1.0,
+    4.0
+   ],
+   5.0
+  ],
+  "expected": 10.630270500015696
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    1.0,
+    0.1,
+    1.0,
+    4.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   1.0,
+   0.5292500041531687,
+   1.0,
+   4.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    2.0,
+    3.0,
+    0.5,
+    8.0
+   ],
+   1.0
+  ],
+  "expected": 0.8151023900412641
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    2.0,
+    3.0,
+    0.5,
+    8.0
+   ],
+   1.5
+  ],
+  "expected": 2.081436870451268
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    2.0,
+    3.0,
+    0.5,
+    8.0
+   ],
+   3.0
+  ],
+  "expected": 34.65903556539175
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    2.0,
+    3.0,
+    0.5,
+    8.0
+   ],
+   5.0
+  ],
+  "expected": 1473.7396933191148
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    2.0,
+    3.0,
+    0.5,
+    8.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   2.0,
+   3.0,
+   0.5,
+   8.0
+  ]
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.5,
+    1.0,
+    2.0,
+    3.0
+   ],
+   1.0
+  ],
+  "expected": 0.3937868042885486
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.5,
+    1.0,
+    2.0,
+    3.0
+   ],
+   1.5
+  ],
+  "expected": 0.4280084722292471
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.5,
+    1.0,
+    2.0,
+    3.0
+   ],
+   3.0
+  ],
+  "expected": 0.5495737569000427
+ },
+ {
+  "function": "repulsive_intensity_for_ring",
+  "args": [
+   [
+    0.5,
+    1.0,
+    2.0,
+    3.0
+   ],
+   5.0
+  ],
+  "expected": 0.7669919636309417
+ },
+ {
+  "function": "clamp_field_ring",
+  "args": [
+   [
+    0.5,
+    1.0,
+    2.0,
+    3.0
+   ],
+   1.0,
+   5.0
+  ],
+  "expected": [
+   0.5,
+   0.7669919636309417,
+   2.0,
+   3.0
+  ]
+ },
+ {
   "function": "flee_reward",
   "args": [
    7.6,

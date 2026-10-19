@@ -72,6 +72,18 @@ def build_cases():
     for speed, target, base in itertools.product((0.0, 0.2, 1.0, 2.5), (0.0, 0.5, 1.5), (1.0, 2.0)):
         add("linger_speed_reward", [speed, target, base], ref.linger_speed_reward(speed, target, base))
 
+    ring_fields = list(FIELDS.values()) + [
+        ref.Field(1.0, 10.0, 6.0, 8.0),
+        ref.Field(1.0, 0.1, 1.0, 4.0),
+        ref.Field(2.0, 3.0, 0.5, 8.0),
+        ref.Field(0.5, 1.0, 2.0, 3.0),
+    ]
+    for field in ring_fields:
+        for ring in (1.0, 1.5, 3.0, 5.0):
+            add("repulsive_intensity_for_ring", [field_args(field), ring], ref.repulsive_intensity_for_ring(field, ring))
+        clamped = ref.clamp_field_ring(field, 1.0, 5.0)
+        add("clamp_field_ring", [field_args(field), 1.0, 5.0], field_args(clamped))
+
     for step, panic in itertools.product((-0.4, -0.1, 0.0, 0.1, 0.275, 0.5), (2.5, 3.0)):
         add("flee_reward", [8.0 + step, 8.0, panic, 0.1], ref.flee_reward(8.0 + step, 8.0, panic, 0.1))
 

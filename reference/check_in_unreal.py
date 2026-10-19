@@ -39,7 +39,10 @@ def make_field(values):
 
 def call(function, args):
     lib = unreal.CrowdEventsLibrary
-    if function in ("perceived_field", "ring_radius", "bubble_radius", "linger_reward"):
+    if function == "clamp_field_ring":
+        f = lib.clamp_field_ring(make_field(args[0]), *args[1:])
+        return [f.get_editor_property(name) for name in ("attractive_intensity", "repulsive_intensity", "repulsive_decay_m", "attractive_decay_m")]
+    if function in ("perceived_field", "ring_radius", "bubble_radius", "linger_reward", "repulsive_intensity_for_ring"):
         return getattr(lib, function)(make_field(args[0]), *args[1:])
     if function == "reference_radius":
         return lib.reference_radius(STATES[args[0]], ROLES[args[1]], make_field(args[2]), *args[3:])

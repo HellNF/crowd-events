@@ -59,6 +59,41 @@ def ring_radius(field, alpha, beta, contact_distance_m=0.8):
     )
 
 
+def _has_ring_shape(field):
+    return field.attractive_intensity > 0.0 and field.repulsive_decay_m > 0.0 and field.attractive_decay_m > field.repulsive_decay_m
+
+
+def repulsive_intensity_for_ring(field, ring_radius_m):
+    """Intensità repulsiva che dà l'anello richiesto con alpha = beta = 1: l'inversa di `ring_radius`."""
+    if not _has_ring_shape(field):
+        return field.repulsive_intensity
+    k = field.repulsive_decay_m * field.attractive_decay_m / (field.attractive_decay_m - field.repulsive_decay_m)
+    return field.attractive_intensity * field.repulsive_decay_m / field.attractive_decay_m * math.exp(ring_radius_m / k)
+
+
+def clamp_field_ring(field, min_ring_m=1.0, max_ring_m=5.0):
+    """Il campo con l'intensità repulsiva corretta perché l'anello resti fra i due estremi."""
+    if not _has_ring_shape(field):
+        return Field(field.attractive_intensity, field.repulsive_intensity, field.repulsive_decay_m, field.attractive_decay_m)
+    low = repulsive_intensity_for_ring(field, min_ring_m)
+    high = repulsive_intensity_for_ring(field, max_ring_m)
+    return Field(field.attractive_intensity, clip(field.repulsive_intensity, low, high), field.repulsive_decay_m, field.attractive_decay_m)
+
+
+def sample_ring_field(rng, min_ring_m=1.0, max_ring_m=5.0, repulsion_range=(0.385, 10.0)):
+    """Come `SampleRingField`, con un `random.Random`: serve a controllare le proprietà, non i numeri."""
+    ring = rng.uniform(min_ring_m, max_ring_m)
+    field = Field()
+    for _ in range(100):
+        field.attractive_intensity = rng.uniform(0.5, 2.0)
+        field.repulsive_decay_m = rng.uniform(0.5, 2.0)
+        field.attractive_decay_m = rng.uniform(max(2.0, field.repulsive_decay_m + 1.0), 8.0)
+        field.repulsive_intensity = repulsive_intensity_for_ring(field, ring)
+        if repulsion_range[0] <= field.repulsive_intensity <= repulsion_range[1]:
+            break
+    return field, ring
+
+
 def bubble_radius(field, contact_distance_m=0.8, ring_width_m=1.5):
     """Raggio della bolla che copre il cerchio di chi guarda (§4.3)."""
     return ring_radius(field, 1.0, 1.0, contact_distance_m) + ring_width_m
@@ -151,4 +186,15 @@ if __name__ == "__main__":
     assert abs(ring_radius(Field(1.0, 0.77), 1.0, 1.0) - 1.4999) < 1e-3
     assert abs(ring_radius(Field(1.0, 5.0), 1.0, 1.0) - 3.9943) < 1e-3
     assert ring_radius(Field(0.0, 1.0, 3.0), 1.0, 1.0) == 0.8
+    # Il tetto: con repulsione 10 e decadimenti 6 e 8 m l'anello sarebbe di circa 62 m.
+    wide = Field(1.0, 10.0, 6.0, 8.0)
+    assert ring_radius(wide, 1.0, 1.0) > 60.0
+    assert abs(ring_radius(clamp_field_ring(wide), 1.0, 1.0) - 5.0) < 1e-9
+    import random
+
+    rng = random.Random(1)
+    for _ in range(10000):
+        sampled, ring = sample_ring_field(rng)
+        assert 1.0 <= ring <= 5.0 and abs(ring_radius(sampled, 1.0, 1.0) - ring) < 1e-9
+        assert 0.385 <= sampled.repulsive_intensity <= 10.0
     print("ok")

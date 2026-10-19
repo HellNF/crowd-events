@@ -83,6 +83,10 @@ enum class ECrowdEventParameter : uint8
 
 namespace CrowdEvents
 {
+	/** Anello ammesso in addestramento e dal pannello, in metri, con α = β = 1. */
+	constexpr double MinRingRadiusM = 1.0;
+	constexpr double MaxRingRadiusM = 5.0;
+
 	/** Preset di partenza, definiti nel codice e quindi non modificabili dal pannello. */
 	CROWDEVENTS_API const TArray<FCrowdEventPresetData>& GetBuiltInPresets();
 
