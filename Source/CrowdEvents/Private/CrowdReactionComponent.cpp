@@ -248,7 +248,8 @@ double UCrowdReactionComponent::GetSpeedTargetMS(double DcrDesiredSpeedMS) const
 {
 	if (State == ECrowdReactionState::Linger && Event.IsValid())
 	{
-		return UCrowdEventsLibrary::LingerSpeedTarget(BaseSpeedMS, GetDistanceToEventM(), GetLingerTargetRadiusM(), Settings.LingerLengthM);
+		// DCR divide per DesiredVelocity²: sull'anello il bersaglio non scende sotto 0,001 m/s.
+		return FMath::Max(UCrowdEventsLibrary::LingerSpeedTarget(BaseSpeedMS, GetDistanceToEventM(), GetLingerTargetRadiusM(), Settings.LingerLengthM), 0.001);
 	}
 	if (State == ECrowdReactionState::Flee)
 	{

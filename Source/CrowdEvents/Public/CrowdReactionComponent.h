@@ -108,6 +108,7 @@ public:
 	/**
 	 * Velocità bersaglio in m/s per la reward e per l'osservazione DesiredVelocity (specifica §5.5).
 	 * DcrDesiredSpeedMS è il valore che DCR ha già calcolato: resta quello negli stati 0 e 1.
+	 * Nella sosta vale almeno 0,001 m/s, perché la reward di DCR divide per il suo quadrato.
 	 */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	double GetSpeedTargetMS(double DcrDesiredSpeedMS) const;

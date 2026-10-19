@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.4`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.5`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -232,3 +232,14 @@ Scritta il 15 ottobre 2026, non ancora compilata.
 - `bNeutralStateAsZeros` parte da falso: nello stato 0 le 12 osservazioni sugli eventi valgono
   [1, 0, …, 0], come nella baseline (dalla verifica di `CastRays` sul remoto: la baseline è
   addestrata con questo vettore, non con dodici zeri). Nient'altro cambia.
+
+## Versione 0.3.5
+
+Scritta il 19 ottobre 2026, non ancora compilata.
+
+- `Get Speed Target MS` nello stato di sosta non scende sotto 0,001 m/s. Sull'anello valeva
+  0 e `ComputeDesiredVelocityForce` di DCR, che divide per `DesiredVelocity²`, dava
+  «Divide by zero» (segnalato dalla verifica della velocità per stato sul remoto). La reward
+  non cambia, perché in sosta il termine di velocità di DCR è moltiplicato per 0; la reward
+  aggiuntiva della sosta usa `Linger Speed Target`, che resta com'era, quindi i 1228 casi di
+  confronto non cambiano.
