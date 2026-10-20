@@ -309,7 +309,7 @@ void UCrowdEventsSubsystem::LookForEvents(UCrowdReactionComponent& Reaction, dou
 			continue;
 		}
 		const double Distance = DistanceM(Reaction, *Event);
-		if (Distance > Event->Params.PerceptionRadiusM)
+		if (Distance > Event->Params.PerceptionRadiusM || !Event->IsInReach(Owner->GetActorLocation()))
 		{
 			continue;
 		}
@@ -353,8 +353,8 @@ void UCrowdEventsSubsystem::AssignState(UCrowdReactionComponent& Reaction, ACrow
 
 	if (bTraining)
 	{
-		// Uno a caso fra gli stati ammessi dalla classe (specifica §9.3).
-		const int32 Choice = Random.RandRange(0, bRescuePossible ? 2 : 1);
+		// Uno a caso fra gli stati ammessi dalla classe (specifica §9.3); nello stadio 1 solo la schivata.
+		const int32 Choice = Event.bAllowLingerInTraining ? Random.RandRange(0, bRescuePossible ? 2 : 1) : 0;
 		if (Choice == 0)
 		{
 			Reaction.SetReaction(ECrowdReactionState::Avoid, ECrowdReactionRole::Normal, &Event);

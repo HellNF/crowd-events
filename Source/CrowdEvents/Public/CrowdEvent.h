@@ -31,6 +31,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Crowd Events")
 	void ApplyPreset(const FCrowdEventPresetData& Preset);
 
+	/** In addestramento, falso limita chi reagisce alla schivata (stadio 1). La dimostrazione lo ignora. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bAllowLingerInTraining = true;
+
+	/** Se vero, percepiscono l'evento solo i pedoni dentro ReachBox, guardando solo X e Y. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bLimitReach = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (EditCondition = "bLimitReach"))
+	FBox ReachBox = FBox(ForceInit);
+
+	bool IsInReach(const FVector& Location) const { return !bLimitReach || ReachBox.IsInsideXY(Location); }
+
 	/** Raggio dell'anello in metri per un pedone con Alpha = Beta = 1. */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	double GetRingRadiusM() const;

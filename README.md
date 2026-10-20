@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.7`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.0`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -282,3 +282,21 @@ Scritta il 19 ottobre 2026, non ancora compilata.
 - Il tetto dell'anello nel pannello è un limite superiore, non un valore da raggiungere: con i
   decadimenti di Brawl (1 e 4 m) l'anello di 5 m chiede «Danger» 10,63, oltre il cursore (10), e
   quindi l'anello si ferma a 4,92 m. È il comportamento atteso.
+
+## Versione 0.4.0
+
+Per lo stadio 1 del curriculum (evento attrattivo fermo, stati 0 e 1).
+
+- **`Crowd Event Spawner`**, attore nuovo. Genera un evento alla volta in un punto a caso del box
+  `Area`, alla quota della sua base, con il campo estratto da `Sample Ring Field` (anello fra
+  `Min Ring M` e `Max Ring M`), raggio di percezione, durata e pause casuali. Finito un evento lo
+  distrugge e, dopo la pausa, ne genera un altro. Il primo evento arriva dopo `First Delay S`,
+  così i corridoi non partono insieme. `Seed` = 0 sceglie un seme diverso a ogni avvio.
+- **Portata limitata.** Gli eventi del generatore li percepiscono solo i pedoni dentro il box
+  `Reach` (in pianta, ingombro allineato agli assi): un evento non arriva ai corridoi vicini
+  attraverso i muri. Sugli eventi messi a mano `Limit Reach` è falso e non cambia nulla.
+- **Solo schivata.** Con `Allow Linger` falso sul generatore (e quindi `Allow Linger In
+  Training` falso sull'evento), in addestramento chi reagisce va sempre nello stato 1. La quota
+  che resta nello stato 0 (`TrainingNeutralQuota`, 0,2) non cambia. La dimostrazione ignora il campo.
+- Il generatore lavora con le classi che hanno un anello (attrattivo, malore); il pericolo
+  arriverà con lo stadio 5.
