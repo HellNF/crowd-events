@@ -3,7 +3,7 @@
 
 FString UCrowdEventsLibrary::GetCrowdEventsVersion()
 {
-	return TEXT("0.3.6");
+	return TEXT("0.3.7");
 }
 
 double UCrowdEventsLibrary::PerceivedField(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM)
@@ -79,7 +79,7 @@ FCrowdEventField UCrowdEventsLibrary::ClampFieldRing(const FCrowdEventField& Fie
 	return Result;
 }
 
-FCrowdEventField UCrowdEventsLibrary::SampleRingField(const FRandomStream& Stream, double MinRingM, double MaxRingM)
+FCrowdEventField UCrowdEventsLibrary::SampleRingField(FRandomStream& Stream, double MinRingM, double MaxRingM)
 {
 	double RepulsionMin = 0.0;
 	double RepulsionMax = 0.0;

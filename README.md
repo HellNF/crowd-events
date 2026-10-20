@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.3.6`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.3.7`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -271,3 +271,14 @@ Scritta il 19 ottobre 2026, non ancora compilata.
   ottenuto uguale a quello estratto, intensità repulsiva nell'intervallo).
 - L'anello personale dipende ancora da α e β, quindi può uscire di poco dall'intervallo:
   il tetto vale per l'evento, non per il singolo pedone.
+
+## Versione 0.3.7
+
+- `Sample Ring Field` prende lo stream come riferimento non costante. Da Blueprint non cambia
+  nulla; da Python la chiamata restituisce `(campo, stream)` e lo stream restituito, già
+  avanzato, va ripassato alla chiamata successiva. Con il riferimento costante il binding Python
+  lavorava su una copia e ogni chiamata dava lo stesso campo.
+- Il commento di `Bubble Radius` torna sopra la sua funzione: cambia solo il tooltip dei nodi.
+- Il tetto dell'anello nel pannello è un limite superiore, non un valore da raggiungere: con i
+  decadimenti di Brawl (1 e 4 m) l'anello di 5 m chiede «Danger» 10,63, oltre il cursore (10), e
+  quindi l'anello si ferma a 4,92 m. È il comportamento atteso.

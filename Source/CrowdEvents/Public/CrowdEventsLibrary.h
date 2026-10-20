@@ -57,7 +57,6 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	static double RingRadius(const FCrowdEventField& Field, double Alpha, double Beta, double ContactDistanceM = 0.8);
 
-	/** Raggio della bolla, in metri: l'anello del pedone tipico più lo spessore del cerchio (specifica §4.3). */
 	/**
 	 * Intensità repulsiva che, con α = β = 1, dà un anello di RingRadiusM: l'inversa di RingRadius.
 	 * Se il campo non può avere un anello (attrazione nulla, decadimenti non validi) restituisce
@@ -77,11 +76,13 @@ public:
 	 * Campo di un evento con anello, per l'addestramento: l'anello è estratto uniforme fra MinRingM
 	 * e MaxRingM, gli altri parametri dentro gli intervalli di addestramento, e l'intensità
 	 * repulsiva è ricavata dall'anello. Se l'intensità esce dal suo intervallo si estraggono di
-	 * nuovo gli altri parametri, tenendo l'anello.
+	 * nuovo gli altri parametri, tenendo l'anello. Lo stream è un riferimento non costante: da
+	 * Python torna come secondo valore, già avanzato, e va ripassato alla chiamata successiva.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Crowd Events")
-	static FCrowdEventField SampleRingField(UPARAM(ref) const FRandomStream& Stream, double MinRingM = 1.0, double MaxRingM = 5.0);
+	static FCrowdEventField SampleRingField(UPARAM(ref) FRandomStream& Stream, double MinRingM = 1.0, double MaxRingM = 5.0);
 
+	/** Raggio della bolla, in metri: l'anello del pedone tipico più lo spessore del cerchio (specifica §4.3). */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	static double BubbleRadius(const FCrowdEventField& Field, double ContactDistanceM = 0.8, double RingWidthM = 1.5);
 
