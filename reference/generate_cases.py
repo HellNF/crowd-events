@@ -84,6 +84,9 @@ def build_cases():
         clamped = ref.clamp_field_ring(field, 1.0, 5.0)
         add("clamp_field_ring", [field_args(field), 1.0, 5.0], field_args(clamped))
 
+    for fraction, bubble, half_width in itertools.product((0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0), (2.5, 4.0, 5.0, 6.5, 9.0), (5.0, 7.0)):
+        add("lateral_offset_m", [fraction, bubble, half_width, 3.0, 0.5], ref.lateral_offset_m(fraction, bubble, half_width))
+
     for step, panic in itertools.product((-0.4, -0.1, 0.0, 0.1, 0.275, 0.5), (2.5, 3.0)):
         add("flee_reward", [8.0 + step, 8.0, panic, 0.1], ref.flee_reward(8.0 + step, 8.0, panic, 0.1))
 

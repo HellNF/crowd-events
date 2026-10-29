@@ -117,6 +117,13 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	double GetMaxWalkSpeedCm(double DcrDesiredSpeedMS) const;
 
+	/**
+	 * Vero per i pedoni fantasma del training: FakePosition di DCR mette la capsula in Ignore sul
+	 * canale Pawn. In addestramento un fantasma reagisce solo con la schivata (stati 0 e 1).
+	 */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	bool IsGhost() const;
+
 	/** Vero negli stati 0 e 1: solo questi pedoni entrano nella media delle velocità dei vicini. */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	bool CountsInNeighbourAverage() const;

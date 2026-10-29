@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.0`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.1`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -300,3 +300,23 @@ Per lo stadio 1 del curriculum (evento attrattivo fermo, stati 0 e 1).
   che resta nello stato 0 (`TrainingNeutralQuota`, 0,2) non cambia. La dimostrazione ignora il campo.
 - Il generatore lavora con le classi che hanno un anello (attrattivo, malore); il pericolo
   arriverà con lo stadio 5.
+
+## Versione 0.4.1
+
+Per lo stadio 2 del curriculum (sosta sull'anello), deciso da Nicolò il 29 ottobre 2026.
+
+- **Posizione laterale varia.** Con `Vary Lateral Position` vero sul generatore, il box `Area`
+  copre tutta la larghezza del corridoio (mezza larghezza = metà del corridoio). Il generatore
+  estrae prima l'anello e poi lo scostamento dal centro con `Lateral Offset M`: un punto uniforme
+  fra quelli a 0,5 m o più dai muri che lasciano, da almeno un lato della bolla, un varco di
+  `Min Free Gap M` (3 m). Sul corridoio da 14 m una bolla fino a 4 m di raggio può stare
+  ovunque, anche al centro; con 6,5 m l'evento resta fra 2,5 e 6,5 m dal centro, da uno dei due
+  lati. La posizione lungo il corridoio resta uniforme nel box. Con `Vary Lateral Position`
+  falso le estrazioni sono quelle della 0.4.0, quindi gli stessi semi danno gli stessi eventi.
+- **Fantasmi senza sosta.** `Is Ghost` è vero quando la capsula del pedone è in `Ignore` sul
+  canale Pawn, come la mette `FakePosition` di DCR: non serve nessun nodo in più nei Blueprint.
+  In addestramento un fantasma che reagisce va solo nello stato 1, anche con `Allow Linger`
+  vero; i pedoni visibili si dividono fra schivata e sosta come prima. Così ogni spettatore è
+  un ostacolo vero per i passanti.
+- **Valori di controllo:** 1338 casi (70 nuovi per `Lateral Offset M`).
+

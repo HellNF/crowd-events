@@ -3,7 +3,7 @@
 
 FString UCrowdEventsLibrary::GetCrowdEventsVersion()
 {
-	return TEXT("0.4.0");
+	return TEXT("0.4.1");
 }
 
 double UCrowdEventsLibrary::PerceivedField(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM)
@@ -105,6 +105,30 @@ FCrowdEventField UCrowdEventsLibrary::SampleRingField(FRandomStream& Stream, dou
 double UCrowdEventsLibrary::BubbleRadius(const FCrowdEventField& Field, double ContactDistanceM, double RingWidthM)
 {
 	return RingRadius(Field, 1.0, 1.0, ContactDistanceM) + RingWidthM;
+}
+
+double UCrowdEventsLibrary::LateralOffsetM(double Fraction, double BubbleRadiusM, double HalfWidthM, double MinFreeGapM, double WallMarginM)
+{
+	const double Low = -HalfWidthM + WallMarginM;
+	const double High = HalfWidthM - WallMarginM;
+	if (High <= Low)
+	{
+		return 0.0;
+	}
+	const double U = FMath::Clamp(Fraction, 0.0, 1.0);
+	// Varco a destra di almeno MinFreeGapM se y <= Limit, a sinistra se y >= -Limit.
+	const double Limit = HalfWidthM - BubbleRadiusM - MinFreeGapM;
+	if (Limit >= 0.0)
+	{
+		return Low + (High - Low) * U;
+	}
+	const double Side = FMath::Max(0.0, Limit - Low);
+	if (Side <= 0.0)
+	{
+		return U < 0.5 ? Low : High;
+	}
+	const double Point = 2.0 * Side * U;
+	return Point < Side ? Low + Point : -Limit + (Point - Side);
 }
 
 double UCrowdEventsLibrary::ReferenceRadius(ECrowdReactionState State, ECrowdReactionRole Role, const FCrowdEventField& Field, double Alpha,

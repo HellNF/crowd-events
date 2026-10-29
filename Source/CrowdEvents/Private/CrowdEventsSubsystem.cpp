@@ -354,7 +354,9 @@ void UCrowdEventsSubsystem::AssignState(UCrowdReactionComponent& Reaction, ACrow
 	if (bTraining)
 	{
 		// Uno a caso fra gli stati ammessi dalla classe (specifica §9.3); nello stadio 1 solo la schivata.
-		const int32 Choice = Event.bAllowLingerInTraining ? Random.RandRange(0, bRescuePossible ? 2 : 1) : 0;
+		// I fantasmi non sostano: uno spettatore invisibile non farebbe da ostacolo ai passanti.
+		const bool bMayLinger = Event.bAllowLingerInTraining && !Reaction.IsGhost();
+		const int32 Choice = bMayLinger ? Random.RandRange(0, bRescuePossible ? 2 : 1) : 0;
 		if (Choice == 0)
 		{
 			Reaction.SetReaction(ECrowdReactionState::Avoid, ECrowdReactionRole::Normal, &Event);

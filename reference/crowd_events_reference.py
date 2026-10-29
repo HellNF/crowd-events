@@ -99,6 +99,22 @@ def bubble_radius(field, contact_distance_m=0.8, ring_width_m=1.5):
     return ring_radius(field, 1.0, 1.0, contact_distance_m) + ring_width_m
 
 
+def lateral_offset_m(fraction, bubble_radius_m, half_width_m, min_free_gap_m=3.0, wall_margin_m=0.5):
+    """Scostamento laterale dal centro del corridoio che lascia un varco da almeno un lato (`LateralOffsetM`)."""
+    low, high = -half_width_m + wall_margin_m, half_width_m - wall_margin_m
+    if high <= low:
+        return 0.0
+    u = clip(fraction, 0.0, 1.0)
+    limit = half_width_m - bubble_radius_m - min_free_gap_m
+    if limit >= 0.0:
+        return low + (high - low) * u
+    side = max(0.0, limit - low)
+    if side <= 0.0:
+        return low if u < 0.5 else high
+    point = 2.0 * side * u
+    return low + point if point < side else -limit + (point - side)
+
+
 def reference_radius(state, role, field, alpha, beta, safe_radius_m, contact_distance_m=0.8, ring_width_m=1.5):
     """Distanza di riferimento per stato e ruolo (§4.3); -1 se lo stato non ne ha una."""
     if state == STATE_AVOID:
@@ -197,4 +213,9 @@ if __name__ == "__main__":
         sampled, ring = sample_ring_field(rng)
         assert 1.0 <= ring <= 5.0 and abs(ring_radius(sampled, 1.0, 1.0) - ring) < 1e-9
         assert 0.385 <= sampled.repulsive_intensity <= 10.0
+        # Corridoio da 14 m: la posizione lascia sempre un varco di 3 m, se la bolla lo permette.
+        bubble = bubble_radius(sampled)
+        y = lateral_offset_m(rng.random(), bubble, 7.0)
+        assert -6.5 <= y <= 6.5
+        assert max(7.0 - y - bubble, y + 7.0 - bubble) >= 3.0 - 1e-9
     print("ok")

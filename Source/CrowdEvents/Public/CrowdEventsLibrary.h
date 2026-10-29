@@ -87,6 +87,16 @@ public:
 	static double BubbleRadius(const FCrowdEventField& Field, double ContactDistanceM = 0.8, double RingWidthM = 1.5);
 
 	/**
+	 * Scostamento laterale dell'evento dal centro del corridoio, in metri, per l'addestramento.
+	 * Fraction (fra 0 e 1) sceglie un punto uniforme fra le posizioni a WallMarginM o più dai muri
+	 * che lasciano, da almeno un lato della bolla, un varco libero di MinFreeGapM. Una bolla
+	 * piccola può stare ovunque, anche al centro; una grande resta vicino a un muro. Se nessuna
+	 * posizione lascia il varco, l'evento va contro un muro, dove il varco è il più largo possibile.
+	 */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	static double LateralOffsetM(double Fraction, double BubbleRadiusM, double HalfWidthM, double MinFreeGapM = 3.0, double WallMarginM = 0.5);
+
+	/**
 	 * Distanza dall'evento a cui il pedone deve riferirsi, in metri (specifica §4.3):
 	 * la bolla nello stato 1, la distanza di sicurezza dopo una fuga, l'anello o il contatto
 	 * nello stato 2. Restituisce -1 negli stati 0 e 3, che non ne hanno una.

@@ -3,6 +3,7 @@
 #include "CrowdEvent.h"
 #include "CrowdEventsLibrary.h"
 #include "CrowdEventsSubsystem.h"
+#include "Components/PrimitiveComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 
@@ -74,6 +75,13 @@ void UCrowdReactionComponent::SetReaction(ECrowdReactionState NewState, ECrowdRe
 void UCrowdReactionComponent::ClearReaction()
 {
 	SetReaction(ECrowdReactionState::None, ECrowdReactionRole::Normal, nullptr);
+}
+
+bool UCrowdReactionComponent::IsGhost() const
+{
+	const AActor* Owner = GetOwner();
+	const UPrimitiveComponent* Root = Owner ? Cast<UPrimitiveComponent>(Owner->GetRootComponent()) : nullptr;
+	return Root && Root->GetCollisionResponseToChannel(ECC_Pawn) == ECR_Ignore;
 }
 
 ACrowdEvent* UCrowdReactionComponent::GetEvent() const

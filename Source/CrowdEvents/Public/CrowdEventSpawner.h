@@ -47,6 +47,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	double MaxRingM = 5.0;
 
+	/**
+	 * Vero dallo stadio 2: il box Area copre tutta la larghezza del corridoio e la posizione
+	 * laterale si estrae dopo l'anello, con Lateral Offset M, lasciando sempre un varco di almeno
+	 * Min Free Gap M. Falso: punto uniforme nel box, come nella 0.4.0 (stesse estrazioni).
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bVaryLateralPosition = false;
+
+	/** Varco libero minimo da un lato della bolla, in metri, con Vary Lateral Position. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	double MinFreeGapM = 3.0;
+
 	/** Raggio di percezione, estratto uniforme fra X e Y metri. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	FVector2D PerceptionRadiusM = FVector2D(4.0, 30.0);

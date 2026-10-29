@@ -69,7 +69,23 @@ void ACrowdEventSpawner::SpawnEvent()
 	}
 
 	const FVector Extent = Area->GetUnscaledBoxExtent();
-	const FVector LocalPoint(RandomIn(FVector2D(-Extent.X, Extent.X)), RandomIn(FVector2D(-Extent.Y, Extent.Y)), -Extent.Z);
+	FCrowdEventField Field;
+	FVector LocalPoint;
+	if (bVaryLateralPosition)
+	{
+		// Prima l'anello, poi una posizione che lasci il varco per la sua bolla.
+		Field = UCrowdEventsLibrary::SampleRingField(Stream, MinRingM, MaxRingM);
+		const double ScaleY = FMath::Max(FMath::Abs(Area->GetComponentScale().Y), UE_SMALL_NUMBER);
+		const double HalfWidthM = Extent.Y * ScaleY * 0.01;
+		const double OffsetM = UCrowdEventsLibrary::LateralOffsetM(Stream.GetFraction(), UCrowdEventsLibrary::BubbleRadius(Field), HalfWidthM,
+			MinFreeGapM);
+		LocalPoint = FVector(RandomIn(FVector2D(-Extent.X, Extent.X)), OffsetM * 100.0 / ScaleY, -Extent.Z);
+	}
+	else
+	{
+		LocalPoint = FVector(RandomIn(FVector2D(-Extent.X, Extent.X)), RandomIn(FVector2D(-Extent.Y, Extent.Y)), -Extent.Z);
+		Field = UCrowdEventsLibrary::SampleRingField(Stream, MinRingM, MaxRingM);
+	}
 	const FTransform SpawnTransform(Area->GetComponentTransform().TransformPosition(LocalPoint));
 
 	ACrowdEvent* Event = World->SpawnActorDeferred<ACrowdEvent>(ACrowdEvent::StaticClass(), SpawnTransform, this, nullptr,
@@ -80,7 +96,7 @@ void ACrowdEventSpawner::SpawnEvent()
 	}
 	Event->EventName = FText::FromString(TEXT("Training event"));
 	Event->Params.EventClass = EventClass;
-	Event->Params.Field = UCrowdEventsLibrary::SampleRingField(Stream, MinRingM, MaxRingM);
+	Event->Params.Field = Field;
 	Event->Params.PerceptionRadiusM = RandomIn(PerceptionRadiusM);
 	Event->Params.DurationS = RandomIn(DurationS);
 	Event->Params.Salience = 1.0;
