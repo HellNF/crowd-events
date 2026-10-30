@@ -43,6 +43,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bGhostsMayLingerInTraining = false;
 
+	/** Premio una tantum a chi arriva fermo sull'anello (o sul soccorso). 0 = come fino alla 0.4.2. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double LingerArrivalBonusInTraining = 0.0;
+
+	/** Penalità una tantum a chi perde lo stato 2 senza essere arrivato: esce dal raggio o supera il tempo di avvicinamento. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double LingerMissPenaltyInTraining = 0.0;
+
 	/** Se vero, percepiscono l'evento solo i pedoni dentro ReachBox, guardando solo X e Y. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLimitReach = false;

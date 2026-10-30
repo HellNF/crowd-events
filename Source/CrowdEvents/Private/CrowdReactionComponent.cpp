@@ -57,6 +57,7 @@ void UCrowdReactionComponent::ResetReaction(double BaseDesiredSpeedMS)
 	HandledEvents.Reset();
 	SafeBonusGiven.Reset();
 	bPendingSafeBonus = false;
+	PendingLingerReward = 0.0;
 	ClearReaction();
 }
 
@@ -193,6 +194,8 @@ double UCrowdReactionComponent::GetEventReward()
 		Reward += Settings.SafeBonus;
 		bPendingSafeBonus = false;
 	}
+	Reward += PendingLingerReward;
+	PendingLingerReward = 0.0;
 
 	const ACrowdEvent* Current = Event.Get();
 	const AActor* Owner = GetOwner();

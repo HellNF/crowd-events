@@ -52,6 +52,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bGhostsMayLinger = false;
 
+	/** Premio una tantum all'arrivo sull'anello, nello stato 2 (0 = nessuno, come nella 0.4.2). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double LingerArrivalBonus = 0.0;
+
+	/** Penalità una tantum a chi perde lo stato 2 senza essere arrivato (0 = nessuna, come nella 0.4.2). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double LingerMissPenalty = 0.0;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	double MinRingM = 1.0;
 

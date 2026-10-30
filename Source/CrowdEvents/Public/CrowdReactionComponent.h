@@ -173,6 +173,9 @@ private:
 
 	bool bPendingSafeBonus = false;
 
+	// Premi e penalità una tantum della sosta, sommati alla prossima reward.
+	double PendingLingerReward = 0.0;
+
 	// Reward: distanza e istante dell'ultima chiamata, per il termine di fuga.
 	double PreviousDistanceM = -1.0;
 	double LastRewardTimeS = -1.0;

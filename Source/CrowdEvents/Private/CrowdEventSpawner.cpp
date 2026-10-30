@@ -103,6 +103,8 @@ void ACrowdEventSpawner::SpawnEvent()
 	Event->bAllowLingerInTraining = bAllowLinger;
 	Event->LingerShareInTraining = LingerShare;
 	Event->bGhostsMayLingerInTraining = bGhostsMayLinger;
+	Event->LingerArrivalBonusInTraining = LingerArrivalBonus;
+	Event->LingerMissPenaltyInTraining = LingerMissPenalty;
 	Event->bLimitReach = true;
 	Event->ReachBox = Reach->Bounds.GetBox();
 	Event->FinishSpawning(SpawnTransform);

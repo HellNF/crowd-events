@@ -236,6 +236,10 @@ void UCrowdEventsSubsystem::UpdateTransitions(UCrowdReactionComponent& Reaction,
 		// Chi si è allontanato oltre il raggio di percezione ha perso l'evento, anche se era già arrivato.
 		if (Distance > Current->Params.PerceptionRadiusM)
 		{
+			if (!Reaction.bArrived)
+			{
+				Reaction.PendingLingerReward -= Current->LingerMissPenaltyInTraining;
+			}
 			Reaction.ClearReaction();
 			break;
 		}
@@ -248,9 +252,11 @@ void UCrowdEventsSubsystem::UpdateTransitions(UCrowdReactionComponent& Reaction,
 			if (bInPlace && Reaction.GetSpeedMS() < Settings.ArrivalSpeedMS)
 			{
 				Reaction.bArrived = true;
+				Reaction.PendingLingerReward += Current->LingerArrivalBonusInTraining;
 			}
 			else if (Reaction.LingerElapsedS > Rules.MaxApproachS)
 			{
+				Reaction.PendingLingerReward -= Current->LingerMissPenaltyInTraining;
 				Reaction.SetReaction(ECrowdReactionState::Avoid, ECrowdReactionRole::Normal, Current);
 			}
 			break;

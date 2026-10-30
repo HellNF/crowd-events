@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.2`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.3`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -337,3 +337,22 @@ fantasmi, che nella 0.4.1 non sostano).
   nella 0.4.1.
 - Riguarda solo l'addestramento: le regole della dimostrazione non cambiano. Nessuna funzione
   nuova nella libreria; i valori di controllo restano 1338.
+
+## Versione 0.4.3
+
+Stadio 2, 30 ottobre 2026: anche con il 19% dei passi nello stato 2 gli spettatori non si
+fermano sull'anello. La reward della sosta è quasi piatta vicino all'anello (entro 1 m vale
+fra 0 e −0,012 per passo, con `EventWeight` 0,1), quindi passarci accanto senza fermarsi costa
+quasi come fermarsi; il 42% degli spettatori passa a meno di 0,5 m dall'anello senza sostare.
+
+- **`Linger Arrival Bonus`** sul generatore (`Linger Arrival Bonus In Training` sull'evento):
+  premio una tantum quando lo spettatore arriva fermo sull'anello (entro 0,5 m e sotto
+  0,2 m/s), o chi soccorre arriva a contatto.
+- **`Linger Miss Penalty`** sul generatore (`Linger Miss Penalty In Training` sull'evento):
+  penalità una tantum quando lo stato 2 si perde senza essere arrivati, uscendo dal raggio di
+  percezione o superando il tempo massimo di avvicinamento (30 s). Chi arriva al goal ancora
+  nello stato 2 non la paga: riceve già il premio del goal di DCR.
+- Tutti e due valgono 0 di partenza, cioè come nella 0.4.2, e non sono pesati da
+  `EventWeight`, come il premio di uscita dalla fuga. Si sommano alla reward successiva e si
+  azzerano con `Reset Reaction`. Nessuna funzione nuova nella libreria; i valori di controllo
+  restano 1338.
