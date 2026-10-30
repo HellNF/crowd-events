@@ -3,7 +3,7 @@
 
 FString UCrowdEventsLibrary::GetCrowdEventsVersion()
 {
-	return TEXT("0.4.3");
+	return TEXT("0.4.4");
 }
 
 double UCrowdEventsLibrary::PerceivedField(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM)

@@ -174,7 +174,12 @@ TArray<float> UCrowdReactionComponent::GetEventObservations() const
 
 FCrowdRewardMultipliers UCrowdReactionComponent::GetRewardMultipliers() const
 {
-	return UCrowdEventsLibrary::RewardMultipliers(State, Role, Settings.PanicK);
+	FCrowdRewardMultipliers Multipliers = UCrowdEventsLibrary::RewardMultipliers(State, Role, Settings.PanicK);
+	if (State == ECrowdReactionState::Linger && Event.IsValid())
+	{
+		Multipliers.Smoothness *= Event->LingerSmoothnessMultiplierInTraining;
+	}
+	return Multipliers;
 }
 
 double UCrowdReactionComponent::GetEventReward()

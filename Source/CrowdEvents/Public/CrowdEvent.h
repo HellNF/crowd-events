@@ -51,6 +51,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double LingerMissPenaltyInTraining = 0.0;
 
+	/** Moltiplicatore in più del termine di regolarità di DCR nello stato 2 (1 = come fino alla 0.4.3). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	double LingerSmoothnessMultiplierInTraining = 1.0;
+
+	/** Condizione di arrivo sull'anello per questo evento; 0 = quella del componente (0,5 m e 0,2 m/s). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double ArrivalToleranceOverrideM = 0.0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double ArrivalSpeedOverrideMS = 0.0;
+
 	/** Se vero, percepiscono l'evento solo i pedoni dentro ReachBox, guardando solo X e Y. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLimitReach = false;

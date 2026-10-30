@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.3`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.4`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -356,3 +356,20 @@ quasi come fermarsi; il 42% degli spettatori passa a meno di 0,5 m dall'anello s
   `EventWeight`, come il premio di uscita dalla fuga. Si sommano alla reward successiva e si
   azzerano con `Reset Reaction`. Nessuna funzione nuova nella libreria; i valori di controllo
   restano 1338.
+
+## Versione 0.4.4
+
+Stadio 2, 30 ottobre 2026: con il premio di arrivo della 0.4.3 i premi restano 0–7 per buffer,
+perché quasi nessuno spettatore scende sotto 0,2 m/s vicino all'anello. Servono per una prova di
+sola sosta e per un curriculum sulla condizione di arrivo.
+
+- **`Arrival Tolerance M`** e **`Arrival Speed M S`** sul generatore (`Arrival Tolerance
+  Override M` e `Arrival Speed Override M S` sull'evento): condizione di arrivo sull'anello più
+  larga per l'addestramento, per esempio 1 m e 0,6 m/s, da stringere un po' alla volta. 0, il
+  valore di partenza, usa quella del componente (0,5 m e 0,2 m/s).
+- **`Linger Smoothness Multiplier`** sul generatore (`Linger Smoothness Multiplier In Training`
+  sull'evento): moltiplica il termine di regolarità di DCR nello stato 2, che penalizza i cambi
+  di direzione fino a −0,2 per passo. 1, il valore di partenza, lo lascia com'è.
+- Con i valori di partenza tutto è come nella 0.4.3. `Reward Multipliers` della libreria non
+  cambia: il moltiplicatore in più lo applica `Get Reward Multipliers` del componente, quindi i
+  valori di controllo restano 1338.

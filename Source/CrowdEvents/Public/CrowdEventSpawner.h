@@ -60,6 +60,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double LingerMissPenalty = 0.0;
 
+	/** Moltiplicatore del termine di regolarità di DCR nello stato 2 (1 = invariato, come nella 0.4.3). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	double LingerSmoothnessMultiplier = 1.0;
+
+	/** Condizione di arrivo sull'anello più larga per l'addestramento; 0 = quella del componente (0,5 m). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double ArrivalToleranceM = 0.0;
+
+	/** Velocità sotto cui lo spettatore conta come fermo; 0 = quella del componente (0,2 m/s). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double ArrivalSpeedMS = 0.0;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	double MinRingM = 1.0;
 

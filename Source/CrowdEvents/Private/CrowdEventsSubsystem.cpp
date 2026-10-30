@@ -248,8 +248,10 @@ void UCrowdEventsSubsystem::UpdateTransitions(UCrowdReactionComponent& Reaction,
 			const bool bRescuer = Reaction.Role == ECrowdReactionRole::Rescuer;
 			const double Gap = Distance - Reaction.GetLingerTargetRadiusM();
 			// Chi soccorre è arrivato quando tocca; chi guarda quando è fermo sull'anello.
-			const bool bInPlace = bRescuer ? Gap <= Settings.ArrivalToleranceM : FMath::Abs(Gap) < Settings.ArrivalToleranceM;
-			if (bInPlace && Reaction.GetSpeedMS() < Settings.ArrivalSpeedMS)
+			const double ToleranceM = Current->ArrivalToleranceOverrideM > 0.0 ? Current->ArrivalToleranceOverrideM : Settings.ArrivalToleranceM;
+			const double SpeedMS = Current->ArrivalSpeedOverrideMS > 0.0 ? Current->ArrivalSpeedOverrideMS : Settings.ArrivalSpeedMS;
+			const bool bInPlace = bRescuer ? Gap <= ToleranceM : FMath::Abs(Gap) < ToleranceM;
+			if (bInPlace && Reaction.GetSpeedMS() < SpeedMS)
 			{
 				Reaction.bArrived = true;
 				Reaction.PendingLingerReward += Current->LingerArrivalBonusInTraining;
