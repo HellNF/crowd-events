@@ -153,10 +153,10 @@ def linger_reward(field, alpha, beta, distance_m, target_radius_m, perception_ra
 
 
 def linger_speed_target(base_speed_ms, distance_m, target_radius_m, length_m=1.0):
-    """Stato 2, velocità bersaglio (§5.5): scende a 0 arrivando sul bersaglio."""
+    """Stato 2, velocità bersaglio (§5.5): scende a 0 arrivando sul bersaglio, da fuori e da dentro (0.4.6)."""
     if length_m <= 0.0:
         return 0.0
-    return base_speed_ms * math.tanh(max(0.0, distance_m - target_radius_m) / length_m)
+    return base_speed_ms * math.tanh(abs(distance_m - target_radius_m) / length_m)
 
 
 def linger_speed_reward(speed_ms, target_speed_ms, base_speed_ms):

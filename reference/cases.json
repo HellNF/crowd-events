@@ -14135,7 +14135,7 @@
    0.8,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.664036770267849
  },
  {
   "function": "linger_speed_target",
@@ -14145,7 +14145,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.9051482536448664
  },
  {
   "function": "linger_speed_target",
@@ -14155,7 +14155,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.999329299739067
  },
  {
   "function": "linger_speed_target",
@@ -14165,7 +14165,7 @@
    0.8,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.9960551554017736
  },
  {
   "function": "linger_speed_target",
@@ -14175,7 +14175,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.3577223804672995
  },
  {
   "function": "linger_speed_target",
@@ -14185,7 +14185,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.4989939496086007
  },
  {
   "function": "linger_speed_target",
@@ -14195,7 +14195,7 @@
    0.8,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.328073540535698
  },
  {
   "function": "linger_speed_target",
@@ -14205,7 +14205,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.8102965072897328
  },
  {
   "function": "linger_speed_target",
@@ -14215,7 +14215,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.998658599478134
  },
  {
   "function": "notice_probability",
@@ -14569,7 +14569,7 @@
    0.8,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.29131261245159096
  },
  {
   "function": "linger_speed_target",
@@ -14579,7 +14579,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.7615941559557649
  },
  {
   "function": "linger_speed_target",
@@ -14589,7 +14589,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.9981778976111987
  },
  {
   "function": "linger_speed_target",
@@ -14599,7 +14599,7 @@
    0.8,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.4369689186773864
  },
  {
   "function": "linger_speed_target",
@@ -14609,7 +14609,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.1423912339336473
  },
  {
   "function": "linger_speed_target",
@@ -14619,7 +14619,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.497266846416798
  },
  {
   "function": "linger_speed_target",
@@ -14629,7 +14629,7 @@
    0.8,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.5826252249031819
  },
  {
   "function": "linger_speed_target",
@@ -14639,7 +14639,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.5231883119115297
  },
  {
   "function": "linger_speed_target",
@@ -14649,7 +14649,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.9963557952223974
  },
  {
   "function": "notice_probability",
@@ -15013,7 +15013,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.6043677771171635
  },
  {
   "function": "linger_speed_target",
@@ -15023,7 +15023,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.9966823978396512
  },
  {
   "function": "linger_speed_target",
@@ -15043,7 +15043,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.9065516656757453
  },
  {
   "function": "linger_speed_target",
@@ -15053,7 +15053,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.4950235967594767
  },
  {
   "function": "linger_speed_target",
@@ -15073,7 +15073,7 @@
    1.5,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.208735554234327
  },
  {
   "function": "linger_speed_target",
@@ -15083,7 +15083,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.9933647956793024
  },
  {
   "function": "notice_probability",
@@ -15457,7 +15457,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.9866142981514303
  },
  {
   "function": "linger_speed_target",
@@ -15487,7 +15487,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.4799214472271456
  },
  {
   "function": "linger_speed_target",
@@ -15517,7 +15517,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.9732285963028606
  },
  {
   "function": "notice_probability",
@@ -15891,7 +15891,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 0.7615941559557649
  },
  {
   "function": "linger_speed_target",
@@ -15921,7 +15921,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.1423912339336473
  },
  {
   "function": "linger_speed_target",
@@ -15951,7 +15951,7 @@
    4.0,
    1.0
   ],
-  "expected": 0.0
+  "expected": 1.5231883119115297
  },
  {
   "function": "notice_probability",

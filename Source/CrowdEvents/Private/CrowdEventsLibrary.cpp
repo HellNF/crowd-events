@@ -3,7 +3,7 @@
 
 FString UCrowdEventsLibrary::GetCrowdEventsVersion()
 {
-	return TEXT("0.4.5");
+	return TEXT("0.4.6");
 }
 
 double UCrowdEventsLibrary::PerceivedField(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM)
@@ -182,7 +182,8 @@ double UCrowdEventsLibrary::LingerSpeedTarget(double BaseSpeedMS, double Distanc
 	{
 		return 0.0;
 	}
-	return BaseSpeedMS * FMath::Tanh(FMath::Max(0.0, DistanceM - TargetRadiusM) / LengthM);
+	// Da dentro come da fuori: con max(0, ...) chi era dentro l'anello aveva bersaglio 0 e restava fermo (0.4.6).
+	return BaseSpeedMS * FMath::Tanh(FMath::Abs(DistanceM - TargetRadiusM) / LengthM);
 }
 
 double UCrowdEventsLibrary::LingerSpeedReward(double SpeedMS, double TargetSpeedMS, double BaseSpeedMS)

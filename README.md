@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.5`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.6`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -388,3 +388,17 @@ standard di circa 0,12: l'esplorazione non prova quasi mai a frenare.
   di partenza, lascia 2 × la velocità desiderata iniziale, fissa, come nella 0.4.4 e nella
   specifica §5.5. In `BP_Pawn` la velocità massima resta limitata fra 0,1 e 500 cm/s.
 - Nessuna funzione nuova nella libreria; i valori di controllo restano 1338.
+
+## Versione 0.4.6
+
+Stadio 2, 31 ottobre 2026: con la velocità massima legata al bersaglio (0.4.5) la sosta avviene
+(arriva sull'anello il 23–30% degli spettatori), ma chi diventa spettatore già dentro l'anello
+resta fermo fino ai 30 s di avvicinamento e blocca chi passa: dentro l'anello il bersaglio
+valeva 0.
+
+- **`Linger Speed Target`** usa |d − d*| invece di max(0, d − d*): il bersaglio scende a 0
+  arrivando sull'anello sia da fuori sia da dentro, e chi è dentro può uscire verso l'anello.
+  Cambia anche il termine di velocità della reward nello stato 2: restare fermi dentro
+  l'anello ora costa.
+- **Valori di controllo:** sempre 1338 casi, ma cambiano i 30 di `linger_speed_target` con il
+  pedone dentro l'anello.

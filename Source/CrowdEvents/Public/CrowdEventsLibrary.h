@@ -121,7 +121,7 @@ public:
 	static double LingerReward(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM, double TargetRadiusM,
 		double PerceptionRadiusM, double ContactDistanceM = 0.8);
 
-	/** Stato 2: velocità bersaglio in m/s, che scende a zero arrivando a TargetRadiusM (specifica §5.5). */
+	/** Stato 2: velocità bersaglio in m/s, che scende a zero arrivando a TargetRadiusM, da fuori e da dentro (specifica §5.5, 0.4.6). */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	static double LingerSpeedTarget(double BaseSpeedMS, double DistanceM, double TargetRadiusM, double LengthM = 1.0);
 
