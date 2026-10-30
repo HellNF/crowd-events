@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.4`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.5`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -373,3 +373,18 @@ sola sosta e per un curriculum sulla condizione di arrivo.
 - Con i valori di partenza tutto è come nella 0.4.3. `Reward Multipliers` della libreria non
   cambia: il moltiplicatore in più lo applica `Get Reward Multipliers` del componente, quindi i
   valori di controllo restano 1338.
+
+## Versione 0.4.5
+
+Stadio 2, 30 ottobre 2026: nella prova di sola sosta gli spettatori attraversano l'anello a
+2,7 m/s (mediana) e la policy chiede sempre 0,93–0,97 di spinta in avanti, con una deviazione
+standard di circa 0,12: l'esplorazione non prova quasi mai a frenare.
+
+- **`Linger Speed Follows Target`** sul generatore e sull'evento: vero, nello stato 2 la velocità
+  massima vale 200 × v*(t) cm/s (al più 500), con v*(t) = `Linger Speed Target`, che scende a 0
+  sull'anello. È la regola di DCR, che negli stati 0 e 1 lega la velocità massima alla velocità
+  desiderata, applicata al bersaglio della sosta: avvicinandosi all'anello il pedone rallenta e
+  sull'anello si ferma. La policy sceglie ancora dove andare e quando restare. Falso, il valore
+  di partenza, lascia 2 × la velocità desiderata iniziale, fissa, come nella 0.4.4 e nella
+  specifica §5.5. In `BP_Pawn` la velocità massima resta limitata fra 0,1 e 500 cm/s.
+- Nessuna funzione nuova nella libreria; i valori di controllo restano 1338.

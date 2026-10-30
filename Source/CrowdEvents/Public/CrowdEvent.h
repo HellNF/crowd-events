@@ -62,6 +62,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double ArrivalSpeedOverrideMS = 0.0;
 
+	/**
+	 * Vero: nello stato 2 la velocità massima segue il bersaglio, 200 × v*(t) cm/s, come DCR la
+	 * lega alla velocità desiderata negli stati 0 e 1; avvicinandosi all'anello il pedone rallenta
+	 * fino a fermarsi. Falso: 2 × la velocità desiderata iniziale, fissa (specifica §5.5, fino alla 0.4.4).
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bLingerSpeedFollowsTarget = false;
+
 	/** Se vero, percepiscono l'evento solo i pedoni dentro ReachBox, guardando solo X e Y. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLimitReach = false;

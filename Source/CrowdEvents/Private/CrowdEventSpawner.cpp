@@ -108,6 +108,7 @@ void ACrowdEventSpawner::SpawnEvent()
 	Event->LingerSmoothnessMultiplierInTraining = LingerSmoothnessMultiplier;
 	Event->ArrivalToleranceOverrideM = ArrivalToleranceM;
 	Event->ArrivalSpeedOverrideMS = ArrivalSpeedMS;
+	Event->bLingerSpeedFollowsTarget = bLingerSpeedFollowsTarget;
 	Event->bLimitReach = true;
 	Event->ReachBox = Reach->Bounds.GetBox();
 	Event->FinishSpawning(SpawnTransform);

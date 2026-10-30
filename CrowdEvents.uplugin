@@ -1,7 +1,7 @@
 {
 	"FileVersion": 3,
-	"Version": 15,
-	"VersionName": "0.4.4",
+	"Version": 16,
+	"VersionName": "0.4.5",
 	"FriendlyName": "Crowd Events",
 	"Description": "Eventi semantici come campi attrattivi e repulsivi per Dynamic Crowd Routing: formule esposte ai Blueprint, eventi piazzabili nel livello e pannello di controllo nell'editor.",
 	"Category": "Simulation",

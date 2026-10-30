@@ -279,6 +279,10 @@ double UCrowdReactionComponent::GetMaxWalkSpeedCm(double DcrDesiredSpeedMS) cons
 	// DCR: MaxWalkSpeed = 200 × DesiredVelocity, al più 500 cm/s.
 	if (State == ECrowdReactionState::Linger)
 	{
+		if (Event.IsValid() && Event->bLingerSpeedFollowsTarget)
+		{
+			return FMath::Min(200.0 * GetSpeedTargetMS(DcrDesiredSpeedMS), 500.0);
+		}
 		return FMath::Min(200.0 * BaseSpeedMS, 500.0);
 	}
 	if (State == ECrowdReactionState::Flee)

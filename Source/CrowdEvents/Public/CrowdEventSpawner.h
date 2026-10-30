@@ -72,6 +72,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double ArrivalSpeedMS = 0.0;
 
+	/** Vero: nello stato 2 la velocità massima segue il bersaglio e scende a 0 sull'anello. Falso: come nella 0.4.4. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bLingerSpeedFollowsTarget = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	double MinRingM = 1.0;
 
