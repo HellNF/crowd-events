@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.1`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.2`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -320,3 +320,20 @@ Per lo stadio 2 del curriculum (sosta sull'anello), deciso da Nicolò il 29 otto
   un ostacolo vero per i passanti.
 - **Valori di controllo:** 1338 casi (70 nuovi per `Lateral Offset M`).
 
+
+## Versione 0.4.2
+
+Ripiego dello stadio 2, 30 ottobre 2026: dopo la tranche 1 gli spettatori non imparavano la
+sosta, perché lo stato 2 era solo il 2,5% dei passi (l'81% del tempo di addestramento è dei
+fantasmi, che nella 0.4.1 non sostano).
+
+- **`Linger Share`** sul generatore (passa all'evento come `Linger Share In Training`): quota di
+  chi sosta fra chi reagisce e può sostare. Il valore di partenza è 0,5, la stessa proporzione
+  della 0.4.1, ma con un'estrazione diversa, quindi gli stessi semi non danno le stesse
+  assegnazioni in addestramento. Con il malore, chi sosta si divide poi a metà fra soccorso e
+  spettatore (nella 0.4.1 era un terzo per ciascuno dei tre stati).
+- **`Ghosts May Linger`** sul generatore (`Ghosts May Linger In Training` sull'evento): vero
+  lascia sostare anche i fantasmi. Falso, il valore di partenza, li limita alla schivata come
+  nella 0.4.1.
+- Riguarda solo l'addestramento: le regole della dimostrazione non cambiano. Nessuna funzione
+  nuova nella libreria; i valori di controllo restano 1338.

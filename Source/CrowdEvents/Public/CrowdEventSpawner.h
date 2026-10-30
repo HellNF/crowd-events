@@ -41,6 +41,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bAllowLinger = true;
 
+	/** Con Allow Linger, quota di chi sosta fra chi reagisce e può sostare (0,5 = metà). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	double LingerShare = 0.5;
+
+	/**
+	 * Con Allow Linger, vero lascia sostare anche i fantasmi: più passi nello stato 2, ma gli
+	 * spettatori fantasma non fanno da ostacolo ai passanti. Falso: solo schivata, come nella 0.4.1.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bGhostsMayLinger = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	double MinRingM = 1.0;
 

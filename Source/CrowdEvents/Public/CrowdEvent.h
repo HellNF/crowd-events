@@ -35,6 +35,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bAllowLingerInTraining = true;
 
+	/** In addestramento, quota di chi sosta fra chi reagisce e può sostare (0,5 = metà, come fino alla 0.4.1). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	double LingerShareInTraining = 0.5;
+
+	/** In addestramento, vero lascia sostare anche i fantasmi; falso li limita alla schivata, come nella 0.4.1. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bGhostsMayLingerInTraining = false;
+
 	/** Se vero, percepiscono l'evento solo i pedoni dentro ReachBox, guardando solo X e Y. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLimitReach = false;

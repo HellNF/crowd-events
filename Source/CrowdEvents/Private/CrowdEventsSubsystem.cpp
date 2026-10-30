@@ -353,10 +353,14 @@ void UCrowdEventsSubsystem::AssignState(UCrowdReactionComponent& Reaction, ACrow
 
 	if (bTraining)
 	{
-		// Uno a caso fra gli stati ammessi dalla classe (specifica §9.3); nello stadio 1 solo la schivata.
-		// I fantasmi non sostano: uno spettatore invisibile non farebbe da ostacolo ai passanti.
-		const bool bMayLinger = Event.bAllowLingerInTraining && !Reaction.IsGhost();
-		const int32 Choice = bMayLinger ? Random.RandRange(0, bRescuePossible ? 2 : 1) : 0;
+		// Sosta con probabilità Linger Share (specifica §9.3); nello stadio 1 solo la schivata.
+		// I fantasmi sostano solo se l'evento lo consente: uno spettatore invisibile non fa da ostacolo ai passanti.
+		const bool bMayLinger = Event.bAllowLingerInTraining && (Event.bGhostsMayLingerInTraining || !Reaction.IsGhost());
+		int32 Choice = 0;
+		if (bMayLinger && Random.GetFraction() < Event.LingerShareInTraining)
+		{
+			Choice = bRescuePossible ? Random.RandRange(1, 2) : 1;
+		}
 		if (Choice == 0)
 		{
 			Reaction.SetReaction(ECrowdReactionState::Avoid, ECrowdReactionRole::Normal, &Event);

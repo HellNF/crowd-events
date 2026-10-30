@@ -101,6 +101,8 @@ void ACrowdEventSpawner::SpawnEvent()
 	Event->Params.DurationS = RandomIn(DurationS);
 	Event->Params.Salience = 1.0;
 	Event->bAllowLingerInTraining = bAllowLinger;
+	Event->LingerShareInTraining = LingerShare;
+	Event->bGhostsMayLingerInTraining = bGhostsMayLinger;
 	Event->bLimitReach = true;
 	Event->ReachBox = Reach->Bounds.GetBox();
 	Event->FinishSpawning(SpawnTransform);
