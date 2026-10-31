@@ -20014,6 +20014,446 @@
   "expected": 6.5
  },
  {
+  "function": "linger_progress_reward",
+  "args": [
+   0.7,
+   1.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307682
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   0.7,
+   1.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   0.9,
+   1.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.769230769230769
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   0.9,
+   1.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   1.0,
+   1.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   1.0,
+   1.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   1.1,
+   1.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   1.1,
+   1.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   1.3,
+   1.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   1.3,
+   1.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.3000000000000003,
+   2.6,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.3000000000000003,
+   2.6,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.5,
+   2.6,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.5,
+   2.6,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.6,
+   2.6,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.6,
+   2.6,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.7,
+   2.6,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.7,
+   2.6,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.9,
+   2.6,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.9,
+   2.6,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.7,
+   3.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.7,
+   3.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.9,
+   3.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307733
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   2.9,
+   3.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   3.0,
+   3.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   3.0,
+   3.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   3.1,
+   3.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307665
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   3.1,
+   3.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307699
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   3.3,
+   3.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   3.3,
+   3.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   5.7,
+   6.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   5.7,
+   6.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   5.9,
+   6.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307665
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   5.9,
+   6.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.7692307692307665
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   6.0,
+   6.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   6.0,
+   6.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": 0.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   6.1,
+   6.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307665
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   6.1,
+   6.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -0.7692307692307665
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   6.3,
+   6.0,
+   0.8,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
+  "function": "linger_progress_reward",
+  "args": [
+   6.3,
+   6.0,
+   2.75,
+   1.3,
+   0.1
+  ],
+  "expected": -1.0
+ },
+ {
   "function": "flee_reward",
   "args": [
    7.6,

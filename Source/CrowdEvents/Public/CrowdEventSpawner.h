@@ -80,6 +80,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bDangerAsWideAvoidance = false;
 
+	/** Vero: nello stato 2 si premia l'avvicinamento al bersaglio passo per passo invece della vicinanza (0.5.0). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bLingerProgressReward = false;
+
+	/** Moltiplicatore del premio di avvicinamento, oltre a EventWeight. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double LingerProgressScale = 1.0;
+
 	/** Malore: soccorre solo chi passerebbe a non più di questa distanza laterale dall'evento; 0 = chiunque. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double RescueMaxLateralM = 0.0;

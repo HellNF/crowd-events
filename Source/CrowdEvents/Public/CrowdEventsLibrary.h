@@ -129,6 +129,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	static double LingerSpeedReward(double SpeedMS, double TargetSpeedMS, double BaseSpeedMS);
 
+	/**
+	 * Stato 2: quanto il pedone si è avvicinato al bersaglio (anello o contatto) nel passo, rispetto
+	 * alla velocità desiderata iniziale, fra -1 e 1. È la differenza del potenziale -|d - d*|, la
+	 * forma dello shaping di Ng, Harada e Russell, speculare al premio della fuga (0.5.0).
+	 */
+	UFUNCTION(BlueprintPure, Category = "Crowd Events")
+	static double LingerProgressReward(double DistanceM, double PreviousDistanceM, double TargetRadiusM, double BaseSpeedMS, double DeltaTimeS);
+
 	/** Stato 3: quanto il pedone si è allontanato nel passo, rispetto alla velocità di panico (specifica §8.3). */
 	UFUNCTION(BlueprintPure, Category = "Crowd Events")
 	static double FleeReward(double DistanceM, double PreviousDistanceM, double PanicSpeedMS, double DeltaTimeS);

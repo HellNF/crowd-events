@@ -232,8 +232,20 @@ double UCrowdReactionComponent::GetEventReward()
 	case ECrowdReactionState::Linger:
 	{
 		const double TargetM = GetLingerTargetRadiusM();
-		Reward += Settings.EventWeight * UCrowdEventsLibrary::LingerReward(Params.Field, Alpha, EffectiveBeta, DistanceM, TargetM,
-			Params.PerceptionRadiusM, Settings.ContactDistanceM);
+		if (Current->bLingerProgressReward)
+		{
+			// Il primo passo nello stato 2 non ha una distanza precedente: niente premio.
+			if (PreviousDistanceM >= 0.0)
+			{
+				Reward += Settings.EventWeight * Current->LingerProgressScale
+					* UCrowdEventsLibrary::LingerProgressReward(DistanceM, PreviousDistanceM, TargetM, BaseSpeedMS, DeltaTimeS);
+			}
+		}
+		else
+		{
+			Reward += Settings.EventWeight * UCrowdEventsLibrary::LingerReward(Params.Field, Alpha, EffectiveBeta, DistanceM, TargetM,
+				Params.PerceptionRadiusM, Settings.ContactDistanceM);
+		}
 
 		const FVector ToEvent = (Current->GetActorLocation() - Owner->GetActorLocation()).GetSafeNormal2D();
 		Reward += Settings.LookWeight * FVector::DotProduct(Owner->GetActorForwardVector().GetSafeNormal2D(), ToEvent);

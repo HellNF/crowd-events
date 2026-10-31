@@ -3,7 +3,7 @@
 
 FString UCrowdEventsLibrary::GetCrowdEventsVersion()
 {
-	return TEXT("0.4.7");
+	return TEXT("0.5.0");
 }
 
 double UCrowdEventsLibrary::PerceivedField(const FCrowdEventField& Field, double Alpha, double Beta, double DistanceM)
@@ -193,6 +193,16 @@ double UCrowdEventsLibrary::LingerSpeedReward(double SpeedMS, double TargetSpeed
 		return 0.0;
 	}
 	return -FMath::Clamp(FMath::Square((SpeedMS - TargetSpeedMS) / BaseSpeedMS), 0.0, 1.0);
+}
+
+double UCrowdEventsLibrary::LingerProgressReward(double DistanceM, double PreviousDistanceM, double TargetRadiusM, double BaseSpeedMS, double DeltaTimeS)
+{
+	if (BaseSpeedMS <= 0.0 || DeltaTimeS <= 0.0)
+	{
+		return 0.0;
+	}
+	const double GainedM = FMath::Abs(PreviousDistanceM - TargetRadiusM) - FMath::Abs(DistanceM - TargetRadiusM);
+	return FMath::Clamp(GainedM / (BaseSpeedMS * DeltaTimeS), -1.0, 1.0);
 }
 
 double UCrowdEventsLibrary::FleeReward(double DistanceM, double PreviousDistanceM, double PanicSpeedMS, double DeltaTimeS)

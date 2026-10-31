@@ -87,6 +87,10 @@ def build_cases():
     for fraction, bubble, half_width in itertools.product((0.0, 0.1, 0.25, 0.5, 0.75, 0.9, 1.0), (2.5, 4.0, 5.0, 6.5, 9.0), (5.0, 7.0)):
         add("lateral_offset_m", [fraction, bubble, half_width, 3.0, 0.5], ref.lateral_offset_m(fraction, bubble, half_width))
 
+    for previous, step, target in itertools.product((1.0, 2.6, 3.0, 6.0), (-0.3, -0.1, 0.0, 0.1, 0.3), (0.8, 2.75)):
+        add("linger_progress_reward", [previous + step, previous, target, 1.3, 0.1],
+            ref.linger_progress_reward(previous + step, previous, target, 1.3, 0.1))
+
     for step, panic in itertools.product((-0.4, -0.1, 0.0, 0.1, 0.275, 0.5), (2.5, 3.0)):
         add("flee_reward", [8.0 + step, 8.0, panic, 0.1], ref.flee_reward(8.0 + step, 8.0, panic, 0.1))
 

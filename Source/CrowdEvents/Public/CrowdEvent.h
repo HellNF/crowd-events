@@ -79,6 +79,16 @@ public:
 	bool bDangerAsWideAvoidance = false;
 
 	/**
+	 * Vero: nello stato 2 il termine di livello del campo è sostituito dal premio di avvicinamento,
+	 * EventWeight × LingerProgressScale × LingerProgressReward (0.5.0). Falso: come fino alla 0.4.7.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bLingerProgressReward = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double LingerProgressScale = 1.0;
+
+	/**
 	 * Malore: può soccorrere solo chi ha l'evento davanti e lo passerebbe a non più di questa
 	 * distanza laterale, in metri; 0 = chiunque (come fino alla 0.4.6).
 	 */

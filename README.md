@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.7`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.5.0`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -420,3 +420,24 @@ difetto:
   rallenta fino a fermarsi ma non cambia rotta verso un punto: il sistema sceglie come
   soccorritori i pedoni che ci stanno già andando incontro.
 - I valori di controllo non cambiano (1338 casi): le due prove toccano solo l'assegnazione degli stati.
+
+## Versione 0.5.0
+
+Stadi 2 e 4, 31 ottobre 2026: le regole del sistema (velocità che segue il bersaglio, soccorritori
+in linea, pericolo come schivata larga) non bastano; la policy non ha imparato a dirigersi verso un
+punto. Il premio della sosta era un termine di livello del campo, quasi piatto vicino all'anello.
+
+- **`Linger Progress Reward`** (generatore ed evento, falso per difetto): nello stato 2 il termine
+  di livello è sostituito da `EventWeight × Linger Progress Scale × Linger Progress Reward`.
+  Il premio vale (|d₋₁ − d*| − |d − d*|) / (v₀ · Δt), limitato a [−1, 1]: quanto il pedone si è
+  avvicinato al bersaglio (anello o contatto) nel passo. È la differenza del potenziale −|d − d*|
+  (shaping di Ng, Harada e Russell, con γ = 1) e la forma speculare del premio della fuga. Il
+  primo passo nello stato 2 non ha premio. Restano il termine di sguardo, quello di velocità,
+  il bonus d'arrivo e la penalità per chi manca l'anello.
+- **`Linger Progress Scale`** (1 per difetto): moltiplicatore del premio, per tararlo senza ricompilare.
+- **Nodo nuovo:** `Linger Progress Reward`.
+- **Valori di controllo:** 1378 casi (40 nuovi di `linger_progress_reward`); i 1338 precedenti non cambiano.
+- **Verifica su un modello semplice** (rettilinei a 2,7 m/s contro avvicinamento all'anello con la
+  regola di velocità, anello a 1,5 m, percezione 10 m, γ = 0,99 per il ritorno scontato): con il
+  termine vecchio avvicinarsi rende −1,89 e passare oltre −5,11; con il nuovo +2,58 e −1,77.
+  Restare fermi lontano rende meno di entrambi (−13,07 col vecchio, −3,80 col nuovo).

@@ -166,6 +166,14 @@ def linger_speed_reward(speed_ms, target_speed_ms, base_speed_ms):
     return -clip(((speed_ms - target_speed_ms) / base_speed_ms) ** 2, 0.0, 1.0)
 
 
+def linger_progress_reward(distance_m, previous_distance_m, target_radius_m, base_speed_ms, delta_time_s):
+    """Stato 2, avvicinamento al bersaglio nel passo (0.5.0): differenza del potenziale -|d - d*|, come la fuga."""
+    if base_speed_ms <= 0.0 or delta_time_s <= 0.0:
+        return 0.0
+    gained_m = abs(previous_distance_m - target_radius_m) - abs(distance_m - target_radius_m)
+    return clip(gained_m / (base_speed_ms * delta_time_s), -1.0, 1.0)
+
+
 def flee_reward(distance_m, previous_distance_m, panic_speed_ms, delta_time_s):
     """Stato 3, allontanarsi (§8.3)."""
     if panic_speed_ms <= 0.0 or delta_time_s <= 0.0:

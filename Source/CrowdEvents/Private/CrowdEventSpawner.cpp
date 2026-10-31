@@ -111,6 +111,8 @@ void ACrowdEventSpawner::SpawnEvent()
 	Event->bLingerSpeedFollowsTarget = bLingerSpeedFollowsTarget;
 	Event->bDangerAsWideAvoidance = bDangerAsWideAvoidance;
 	Event->RescueMaxLateralM = RescueMaxLateralM;
+	Event->bLingerProgressReward = bLingerProgressReward;
+	Event->LingerProgressScale = LingerProgressScale;
 	Event->bLimitReach = true;
 	Event->ReachBox = Reach->Bounds.GetBox();
 	Event->FinishSpawning(SpawnTransform);
