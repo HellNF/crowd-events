@@ -70,6 +70,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLingerSpeedFollowsTarget = false;
 
+	/**
+	 * Vero: chi percepisce un pericolo entra nello stato 1 con il ruolo «dopo la fuga», cioè la
+	 * schivata con la bolla larga quanto la distanza di sicurezza, e non passa mai allo stato 3.
+	 * Serve a provare se la schivata imparata basta a far fuggire (0.4.7). Falso: stato 3.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bDangerAsWideAvoidance = false;
+
+	/**
+	 * Malore: può soccorrere solo chi ha l'evento davanti e lo passerebbe a non più di questa
+	 * distanza laterale, in metri; 0 = chiunque (come fino alla 0.4.6).
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double RescueMaxLateralM = 0.0;
+
 	/** Se vero, percepiscono l'evento solo i pedoni dentro ReachBox, guardando solo X e Y. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLimitReach = false;

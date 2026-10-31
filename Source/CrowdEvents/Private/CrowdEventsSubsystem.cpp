@@ -218,8 +218,8 @@ void UCrowdEventsSubsystem::UpdateTransitions(UCrowdReactionComponent& Reaction,
 	case ECrowdReactionState::Avoid:
 		if (Reaction.Role == ECrowdReactionRole::AfterFlight)
 		{
-			// Troppo vicino al pericolo: si torna a fuggire.
-			if (Distance < Settings.PanicRadiusM)
+			// Troppo vicino al pericolo: si torna a fuggire, salvo che il pericolo si affronti con la sola schivata.
+			if (Distance < Settings.PanicRadiusM && !Current->bDangerAsWideAvoidance)
 			{
 				Reaction.SetReaction(ECrowdReactionState::Flee, ECrowdReactionRole::Normal, Current);
 			}
@@ -353,11 +353,27 @@ void UCrowdEventsSubsystem::AssignState(UCrowdReactionComponent& Reaction, ACrow
 	const ECrowdEventClass EventClass = Event.Params.EventClass;
 	if (EventClass == ECrowdEventClass::Danger)
 	{
-		Reaction.SetReaction(ECrowdReactionState::Flee, ECrowdReactionRole::Normal, &Event);
+		if (Event.bDangerAsWideAvoidance)
+		{
+			Reaction.SetReaction(ECrowdReactionState::Avoid, ECrowdReactionRole::AfterFlight, &Event);
+		}
+		else
+		{
+			Reaction.SetReaction(ECrowdReactionState::Flee, ECrowdReactionRole::Normal, &Event);
+		}
 		return;
 	}
 
-	const bool bRescuePossible = EventClass == ECrowdEventClass::Illness && CountRescuers(&Event) < Rules.MaxRescuers;
+	bool bRescuePossible = EventClass == ECrowdEventClass::Illness && CountRescuers(&Event) < Rules.MaxRescuers;
+	if (bRescuePossible && Event.RescueMaxLateralM > 0.0 && Reaction.GetOwner())
+	{
+		// Soccorre chi va già verso il malato: la politica rallenta bene ma non sa cambiare rotta verso un punto.
+		const AActor* Owner = Reaction.GetOwner();
+		const FVector ToEvent = (Event.GetActorLocation() - Owner->GetActorLocation()) * UnitsToMeters;
+		const double AheadM = FVector::DotProduct(ToEvent, Owner->GetActorForwardVector().GetSafeNormal2D());
+		const double LateralM = FMath::Abs(FVector::DotProduct(ToEvent, Owner->GetActorRightVector().GetSafeNormal2D()));
+		bRescuePossible = AheadM > 0.0 && LateralM <= Event.RescueMaxLateralM;
+	}
 
 	if (bTraining)
 	{

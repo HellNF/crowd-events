@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.4.6`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.4.7`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -402,3 +402,21 @@ valeva 0.
   l'anello ora costa.
 - **Valori di controllo:** sempre 1338 casi, ma cambiano i 30 di `linger_speed_target` con il
   pedone dentro l'anello.
+
+## Versione 0.4.7
+
+Stadi 4 e 5, 31 ottobre 2026: valutati senza addestramento con i pesi `stadio1bis-fine`, solo
+l'11% dei soccorritori arriva a contatto (gli altri passano a 5 m dal malato) e chi deve fuggire
+dal pericolo continua verso il goal (il 66% si avvicina al pericolo). Due prove, spente per
+difetto:
+
+- **`Danger As Wide Avoidance`** (generatore ed evento): chi percepisce un pericolo entra nello
+  stato 1 con il ruolo «dopo la fuga», cioè la schivata con la bolla larga quanto la distanza di
+  sicurezza (15 m), invece che nello stato 3, che la politica non ha mai visto. Il ritorno alla
+  fuga sotto il raggio di panico è spento. Serve a vedere se la schivata imparata basta a far
+  fuggire prima di addestrare lo stato 3.
+- **`Rescue Max Lateral M`** (generatore ed evento): può soccorrere solo chi ha il malato davanti e
+  lo passerebbe a non più di questa distanza laterale; 0 = chiunque, come prima. La politica
+  rallenta fino a fermarsi ma non cambia rotta verso un punto: il sistema sceglie come
+  soccorritori i pedoni che ci stanno già andando incontro.
+- I valori di controllo non cambiano (1338 casi): le due prove toccano solo l'assegnazione degli stati.

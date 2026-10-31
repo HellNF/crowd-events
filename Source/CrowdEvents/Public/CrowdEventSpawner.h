@@ -76,6 +76,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	bool bLingerSpeedFollowsTarget = false;
 
+	/** Vero: il pericolo si affronta con la schivata a bolla larga (stato 1 «dopo la fuga») invece che con lo stato 3. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bDangerAsWideAvoidance = false;
+
+	/** Malore: soccorre solo chi passerebbe a non più di questa distanza laterale dall'evento; 0 = chiunque. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
+	double RescueMaxLateralM = 0.0;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
 	double MinRingM = 1.0;
 
