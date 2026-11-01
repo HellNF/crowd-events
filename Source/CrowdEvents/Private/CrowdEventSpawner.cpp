@@ -113,6 +113,7 @@ void ACrowdEventSpawner::SpawnEvent()
 	Event->RescueMaxLateralM = RescueMaxLateralM;
 	Event->bLingerProgressReward = bLingerProgressReward;
 	Event->LingerProgressScale = LingerProgressScale;
+	Event->bFullRangeProgressReward = bFullRangeProgressReward;
 	Event->bLimitReach = true;
 	Event->ReachBox = Reach->Bounds.GetBox();
 	Event->FinishSpawning(SpawnTransform);

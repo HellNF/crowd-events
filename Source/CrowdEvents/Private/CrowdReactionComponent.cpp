@@ -237,8 +237,11 @@ double UCrowdReactionComponent::GetEventReward()
 			// Il primo passo nello stato 2 non ha una distanza precedente: niente premio.
 			if (PreviousDistanceM >= 0.0)
 			{
+				// 0.5.1: al massimo DCR va a 2 × la velocità di base, fino a 5 m/s; non si usa il limite
+				// corrente, che con la regola di velocità tende a zero sull'anello.
+				const double ProgressSpeedMS = Current->bFullRangeProgressReward ? FMath::Min(2.0 * BaseSpeedMS, 5.0) : BaseSpeedMS;
 				Reward += Settings.EventWeight * Current->LingerProgressScale
-					* UCrowdEventsLibrary::LingerProgressReward(DistanceM, PreviousDistanceM, TargetM, BaseSpeedMS, DeltaTimeS);
+					* UCrowdEventsLibrary::LingerProgressReward(DistanceM, PreviousDistanceM, TargetM, ProgressSpeedMS, DeltaTimeS);
 			}
 		}
 		else
@@ -259,7 +262,9 @@ double UCrowdReactionComponent::GetEventReward()
 	case ECrowdReactionState::Flee:
 		if (PreviousDistanceM >= 0.0)
 		{
-			Reward += Settings.EventWeight * UCrowdEventsLibrary::FleeReward(DistanceM, PreviousDistanceM, PanicSpeedMS, DeltaTimeS);
+			// 0.5.1: in fuga MaxWalkSpeed è 5 m/s (GetMaxWalkSpeedCm).
+			const double FleeSpeedMS = Current->bFullRangeProgressReward ? 5.0 : PanicSpeedMS;
+			Reward += Settings.EventWeight * UCrowdEventsLibrary::FleeReward(DistanceM, PreviousDistanceM, FleeSpeedMS, DeltaTimeS);
 		}
 		break;
 

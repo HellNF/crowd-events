@@ -40,7 +40,7 @@ classe `CrowdEventPreset`.
 
 | Nodo | Che cosa fa |
 |---|---|
-| `Get Crowd Events Version` | restituisce `0.5.0`; serve a verificare che il plugin sia caricato |
+| `Get Crowd Events Version` | restituisce `0.5.1`; serve a verificare che il plugin sia caricato |
 | `Perceived Field` | campo percepito a una distanza dall'evento |
 | `Ring Radius` | distanza a cui il campo ha il minimo; se non esiste, la distanza di contatto |
 | `Bubble Radius` | anello del pedone tipico più lo spessore del cerchio di chi guarda |
@@ -420,6 +420,18 @@ difetto:
   rallenta fino a fermarsi ma non cambia rotta verso un punto: il sistema sceglie come
   soccorritori i pedoni che ci stanno già andando incontro.
 - I valori di controllo non cambiano (1338 casi): le due prove toccano solo l'assegnazione degli stati.
+
+## Versione 0.5.1
+
+Prova di sola fuga, 1 novembre 2026: a 4,9 m/s il premio di fuga, diviso per la velocità di panico
+(2,5–3 m/s), satura a ±1 entro circa 56° dalla direzione radiale. Chi corre verso il pericolo non
+riceve un segnale immediato per le piccole correzioni di rotta.
+
+- **`Full Range Progress Reward`** (generatore ed evento, falso per difetto): il premio di fuga si
+  divide per 5 m/s e quello di avvicinamento per min(2 × velocità di base, 5 m/s). Cambia solo il
+  valore passato ai nodi `Flee Reward` e `Linger Progress Reward`; il premio massimo per passo resta
+  uguale. Spento, il comportamento è quello della 0.5.0.
+- **Valori di controllo:** 1378 casi, invariati; le formule della libreria non cambiano.
 
 ## Versione 0.5.0
 

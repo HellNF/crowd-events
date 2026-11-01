@@ -89,6 +89,14 @@ public:
 	double LingerProgressScale = 1.0;
 
 	/**
+	 * Vero: il premio di fuga e quello di avvicinamento si dividono per la velocità massima
+	 * raggiungibile invece che per la velocità bersaglio, così non saturano per le rotte oblique (0.5.1).
+	 * Fuga: 5 m/s. Avvicinamento: min(2 × velocità di base, 5 m/s). Falso: come fino alla 0.5.0.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bFullRangeProgressReward = false;
+
+	/**
 	 * Malore: può soccorrere solo chi ha l'evento davanti e lo passerebbe a non più di questa
 	 * distanza laterale, in metri; 0 = chiunque (come fino alla 0.4.6).
 	 */

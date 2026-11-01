@@ -88,6 +88,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double LingerProgressScale = 1.0;
 
+	/** Vero: premi di fuga e di avvicinamento divisi per la velocità massima raggiungibile, senza saturazione sulle rotte oblique (0.5.1). */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events")
+	bool bFullRangeProgressReward = false;
+
 	/** Malore: soccorre solo chi passerebbe a non più di questa distanza laterale dall'evento; 0 = chiunque. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Crowd Events", meta = (ClampMin = "0.0"))
 	double RescueMaxLateralM = 0.0;
